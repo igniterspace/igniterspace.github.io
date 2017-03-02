@@ -1,6 +1,8 @@
 /*----------------------------------------------
 Custom Css file 
 ------------------------------------------------*/
+
+
 h1,h2,h3,h4,h5,h6 {
 	font-family: Georgia, serif; 
 }
@@ -19,7 +21,8 @@ left:0;
 display:none;
 position:fixed;
 background-color:#313131;
-overflow:auto
+overflow:auto;
+z-index: 50;
 }
 #paymentFormDiv {
 width:100%;
@@ -31,6 +34,7 @@ display:none;
 position:fixed;
 background-color:#313131;
 overflow:auto;
+z-index: 50;
 }
 span#closeForm {
 position:absolute;

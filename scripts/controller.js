@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp',["ngTable"]); //if not working remove ngTable from square brackets and leave it empty []
 
-	myApp.controller('DashboardCtrl', ['$scope', '$http','$filter', 'NgTableParams', function($scope, $http, $filter, NgTableParams) {
+	myApp.controller('DashboardCtrl', ['$scope', '$http','$filter', 'NgTableParams', '$location', '$anchorScroll', function($scope, $http, $filter, NgTableParams, $location, $anchorScroll) {
     
 
     $scope.dateNow = new Date(); //to get current date
@@ -39,6 +39,9 @@ var myApp = angular.module('myApp',["ngTable"]); //if not working remove ngTable
   	}
 
 
+
+
+
     //-------------------------------
     //THIS FUNCTION IS TO VIEW ATTENDANCE
     $scope.viewAttendance = function(){
@@ -46,8 +49,6 @@ var myApp = angular.module('myApp',["ngTable"]); //if not working remove ngTable
       var url = "https://script.google.com/macros/s/AKfycbzcvdl840bsB3nneQmL2AYApFlccl9N-KOQacIllXVlyOuHaUo/exec?studentid="+$scope.studentid;
       $http.get(url)
       .then(function(response){
-        console.log(response);
-
         $scope.data = response.data;
 
         if(response.data == "NO ATTENDANCE RECORD"){
@@ -59,7 +60,7 @@ var myApp = angular.module('myApp',["ngTable"]); //if not working remove ngTable
           $scope.loadingGif=false;
         //$scope.viewingAtt = false;
         //$scope.results = false; //to get back to menu
-        $scope.student_id = null; //clear the student id box
+        
 
 
         //----USE A FOR LOOOP HERE--------------------------------------------
@@ -85,6 +86,12 @@ var myApp = angular.module('myApp',["ngTable"]); //if not working remove ngTable
           return $scope.data;
         }
       });
+       //$("#panelAttendance").focus();
+       //focusAttendance();
+       
+
+
+       
 
 } //else end
 
@@ -107,7 +114,7 @@ $scope.hideAttendance = function(){
     //THIS FUNCTION IS TO GET THE STUDENT DETAILS WITH STUDENT ID
     //THIS FUNCTION ALSO GETS THE PAYMENT DETAILS
   	$scope.getStudentByID = function(student_id){
-
+      $scope.viewingAtt = false; //when page loads , attendance should not be shown
       
 
       if(!student_id){  //check if student_id is blank , null or whitespaces
@@ -152,6 +159,8 @@ $scope.hideAttendance = function(){
               $scope.qr_code = $scope.data.students[0].qr_code;
 
 
+              //array to store payments
+              $scope.paymentArray = [];
 
               //--Check if payments are done here
               if($scope.data.payments.length == 0){ //if array is empty
@@ -167,6 +176,7 @@ $scope.hideAttendance = function(){
                 //for registration we check if its filled AND if payment_type is set to registration
               if(($scope.data.payments[0].payment_type).toLowerCase() == "registration"){
                 $scope.registration = true;
+                $scope.paymentArray[0] = $scope.data.payments[0]; //assign value to a variable for use after attendance table loaded
               }else{
                 $scope.registration = false;
               }
@@ -174,36 +184,43 @@ $scope.hideAttendance = function(){
               //First monthly payment
               if($scope.data.payments[1]){
                 $scope.payment1 = true;
+                $scope.paymentArray[1] = $scope.data.payments[1]; //assign value to a variable for use after attendance table loaded
+
               }else{
                 $scope.payment1 = false;
               }
               //Second monthly payment
               if($scope.data.payments[2]){
                 $scope.payment2 = true;
+                $scope.paymentArray[2] = $scope.data.payments[2]; //assign value to a variable for use after attendance table loaded
               }else{
                 $scope.payment2 = false;
               }
               //Third monthly payment
               if($scope.data.payments[3]){
                 $scope.payment3 = true;
+                $scope.paymentArray[3] = $scope.data.payments[3]; //assign value to a variable for use after attendance table loaded
               }else{
                 $scope.payment3 = false;
               }
               //Fourth monthly payment
               if($scope.data.payments[4]){
                 $scope.payment4 = true;
+                $scope.paymentArray[4] = $scope.data.payments[4]; //assign value to a variable for use after attendance table loaded
               }else{
                 $scope.payment4 = false;
               }
               //Fifth monthly payment
               if($scope.data.payments[5]){
                 $scope.payment5 = true;
+                $scope.paymentArray[5] = $scope.data.payments[5]; //assign value to a variable for use after attendance table loaded
               }else{
                 $scope.payment5 = false;
               }
               //Sixth monthly payment
               if($scope.data.payments[6]){
                 $scope.payment6 = true;
+                $scope.paymentArray[6] = $scope.data.payments[6]; //assign value to a variable for use after attendance table loaded
               }else{
                 $scope.payment6 = false;
               }
@@ -262,6 +279,29 @@ $scope.hideAttendance = function(){
 
 
       document.getElementById('formDiv').style.display = "block";
+    }
+
+
+    //THIS FUNCTION IS TO LOAD THE PAYMENT DETAILS AND DISPLAY IT IN THE WEBSITE
+
+    $scope.openPaymentForm = function(type){
+
+      //------------------------------------------
+      var payment_index = type;
+
+      $scope.displayPaymentDate = $scope.paymentArray[payment_index].date ;
+      $scope.displayPaymentType = $scope.paymentArray[payment_index].payment_type;
+      $scope.displayPaymentAmount = $scope.paymentArray[payment_index].amount;
+
+//$scope.pmt3
+
+
+
+      document.getElementById('paymentFormDiv').style.display = "block";
+
+
+      //------------------------------------------
+
     }
 
     //THIS FUNCTION IS TO CLOSRE THE VERIFY FORM
@@ -391,29 +431,7 @@ $scope.hideAttendance = function(){
     }
 
 
-//THIS FUNCTION IS TO LOAD THE PAYMENT DETAILS AND DISPLAY IT IN THE WEBSITE
 
-    $scope.openPaymentForm = function(payment_type){
-
-      //------------------------------------------
-      var payment_index = payment_type;
-
-      $scope.displayPaymentDate = $scope.data.payments[payment_index].date ;
-      $scope.displayPaymentType = $scope.data.payments[payment_index].payment_type;
-      $scope.displayPaymentAmount = $scope.data.payments[payment_index].amount;
-
-
-//alert("PAYMENT DATE "+$scope.displayPaymentDate);
-//alert("PAYMENT Type "+$scope.displayPaymentType);
-//alert("PAYMENT Amount "+$scope.displayPaymentAmount);
-
-
-      document.getElementById('paymentFormDiv').style.display = "block";
-
-
-      //------------------------------------------
-
-    }
 
 
 
@@ -422,12 +440,6 @@ $scope.hideAttendance = function(){
       
       document.getElementById('paymentFormDiv').style.display = "none";
     }
-
-
-
-
-
-
 
 
   }]);

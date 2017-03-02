@@ -73,6 +73,10 @@
  }
 
 
+
+
+
+
   </script>
 
 
@@ -81,7 +85,7 @@
 
 
 
-<body ng-app="myApp" ng-controller="DashboardCtrl">
+<body ng-app="myApp" ng-controller="DashboardCtrl"  >
 
 
 
@@ -226,30 +230,37 @@
 				</div>
 
 
-				<br/>
+				
 				<div ng-show="results" class="col-md-12 content">
 					
-					<br/>
-					<button ng-click="results=false;student_id=null" class="btn btn-danger btn-lg btn-outline btn-rounded">Back</button>
-					<br/>
-					<br/>
+					
+					<button ng-click="results=false;student_id=null" class="btn btn-danger btn-md btn-outline btn-rounded">Back</button>
+					<br/><br/>
+					
 					
 
-
-					<table ng-table="StudTable" class="table table-bordered table-striped table-responsive">
-							<tr > 
-								<td data-title="'Registration Number'">{{reg_no}}</td>
-								<td data-title="'Name'">{{name}}</td> 
-								<td data-title="'Batch'">{{batch}}</td>
-								<td data-title="'Age'">{{age}}</td>
-								<td data-title="'Age Group'">{{age_group}}</td>
-								<td data-title="'Parents Name'">{{parents_name}}</td>
-								<td data-title="'E-mail'">{{email}}</td>
-								<td data-title="'Phone'">{{phone}}</td>
-								<td data-title="'QR Code'">{{qr_code}}</td>
-							</tr>
-					</table>
-
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4>Student Details</h4>
+						</div>
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table ng-table="StudTable" class="table table-bordered table-striped table-responsive">
+										<tr > 
+											<td data-title="'Registration Number'">{{reg_no}}</td>
+											<td data-title="'Name'">{{name}}</td> 
+											<td data-title="'Batch'">{{batch}}</td>
+											<td data-title="'Age'">{{age}}</td>
+											<td data-title="'Age Group'">{{age_group}}</td>
+											<td data-title="'Parents Name'">{{parents_name}}</td>
+											<td data-title="'E-mail'">{{email}}</td>
+											<td data-title="'Phone'">{{phone}}</td>
+											<td data-title="'QR Code'">{{qr_code}}</td>
+										</tr>
+								</table>
+							</div>
+						</div>
+					</div>
 
 
 			                            
@@ -300,7 +311,6 @@
 
 
 					<div id="attButtons">
-					<div class="row">
 							<div class="col-md-6">
 							<div ng-hide="markingAtt">
 								<button ng-click="markAttendance()" class="btn btn-primary btn-lg btn-outline btn-rounded">Mark Attendance</button>
@@ -322,22 +332,28 @@
 								</span>	
 							</div>
 							</div>
-					</div>
+					
 							<div ng-show="viewingAtt">
 
 								<button ng-click="hideAttendance()" class="btn btn-primary btn-lg btn-outline btn-rounded">Hide Attendance</button><!--CODE THIS LATER-->
-
+									<br/><br/>
+									<div class="panel panel-default" id="panelAttendance" autoscroll="true">
+										<div class="panel-heading">		
+											<h4>Attendance Table for {{name}} ({{reg_no}})</h4>
+										</div>
+										<div class="panel-body">
+											<div class="table-responsive">
+												<table ng-table="AttTable" class="table table-bordered table-striped">
+													<tr ng-repeat="att in $data track by $index"  > 
+														<td data-title="'Registration Number'" sortable="'reg_no'">{{att.reg_no}}</td>
+														<td data-title="'Attendance Date'" sortable="'date'">{{att.date | date:'mediumDate'}}</td> 
+														<td data-title="'Batch'" sortable="'batch'">{{att.batch}}</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+									</div>
 								
-										<h4>Attendance Table for {{name}} ({{reg_no}})</h4>
-									
-									<table ng-table="AttTable" class="table table-bordered table-striped">
-										<tr ng-repeat="att in $data track by $index"  > 
-											<td data-title="'Registration Number'" sortable="'reg_no'">{{att.reg_no}}</td>
-											<td data-title="'Attendance Date'" sortable="'date'">{{att.date | date:'mediumDate'}}</td> 
-											<td data-title="'Batch'" sortable="'batch'">{{att.batch}}</td>
-										</tr>
-									</table>
-									
 
 
 
@@ -398,7 +414,6 @@
 </div> 
 </div>
 </div> 
-
 
 
 	<footer class="footer">
