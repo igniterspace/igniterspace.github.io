@@ -1,9 +1,11 @@
 var myApp = angular.module('myApp',["ngTable"]); //if not working remove ngTable from square brackets and leave it empty []
 
-	myApp.controller('DashboardCtrl', ['$scope', '$http','$filter', 'NgTableParams', '$location', '$anchorScroll', function($scope, $http, $filter, NgTableParams, $location, $anchorScroll) {
+	myApp.controller('DashboardCtrl', ['$scope', '$http','$filter', 'NgTableParams', '$location', '$anchorScroll','$window', function($scope, $http, $filter, NgTableParams, $location, $anchorScroll,$window) {
     
 
     $scope.dateNow = new Date(); //to get current date
+    var globalUsername = "igniter";
+    var globalPassword = "1";
 
 
   	$scope.loading = false;
@@ -39,7 +41,13 @@ var myApp = angular.module('myApp',["ngTable"]); //if not working remove ngTable
   	}
 
 
-
+$scope.printMe = function(){
+   var divToPrint=document.getElementById("panelAttendance");
+   newWin= window.open("");
+   newWin.document.write(divToPrint.outerHTML);
+   newWin.print();
+   newWin.close();
+}
 
 
     //-------------------------------
@@ -89,9 +97,9 @@ var myApp = angular.module('myApp',["ngTable"]); //if not working remove ngTable
        //$("#panelAttendance").focus();
        //focusAttendance();
        
+//scrollTo();
 
-
-       
+       scrollTo();
 
 } //else end
 
@@ -313,8 +321,8 @@ $scope.hideAttendance = function(){
     //THIS FORM IS TO CHECK THE DETAILS IN THE VERIFY FORM AND THEN ADD THE DETAILS TO PAYMENT GOOGLE SHEETS
     $scope.verifyPayment = function(username, password){
       //first hardcode the username and password, later use the google sheet
-      var uname = "igniter";
-      var pass = "1";
+      var uname = globalUsername;
+      var pass = globalPassword;
 
 
 
@@ -439,6 +447,38 @@ $scope.hideAttendance = function(){
     $scope.closePaymentForm = function(){
       
       document.getElementById('paymentFormDiv').style.display = "none";
+    }
+
+
+
+
+    $scope.login = function(username, password){
+      var user = globalUsername;
+      var pass = globalPassword;
+
+          //=-------
+
+     
+
+
+          //After form is submitted, check if login details are correct
+          if((username == user) && (password == pass)){
+            //enter the details to the transaction database (payment_logs table)
+            
+            $scope.successDialog("Login successful", "Welcome to Igniter Space!!");
+            //$window.location.href = '/index.html';
+            //$location.url('/index')
+            $window.location.href = 'C:/Users/Nimaaz/Documents/igniterspace.github.io/index.html#/';
+            }
+            else
+            {
+              
+              $scope.errorDialog("Login failed!","Please make sure username and password are correct before logging in.")
+            }
+
+          //=-------
+
+
     }
 
 

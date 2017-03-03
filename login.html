@@ -1,0 +1,160 @@
+<html>
+<head>
+<title>Igniter Space</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script type="text/javascript" src="scripts/controller.js"></script>
+
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!--INCLUDING FOR NG-table TABLES-->
+    <link rel="stylesheet"; href="https://cdnjs.cloudflare.com/ajax/libs/ng-table/1.0.0/ng-table.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-table/1.0.0/ng-table.js"></script>
+
+
+
+
+    
+
+    <!--USING JQUERY UI -->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+
+	<!--Using light bootstrap dashboard-->
+	<!--  Light Bootstrap Table core CSS    -->
+	
+
+
+   
+
+<link href="css/myCss.css" rel="stylesheet"><!--custom style sheet-->
+
+
+<script>
+  $( function() {
+    $( "#dialog-error" ).dialog({
+      autoOpen:false,
+      resizable: false,
+      height: "auto",
+      width: 400,
+      modal: true,
+      buttons: {
+        OK: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+  } );
+
+  $( function() {
+    $( "#dialog-success" ).dialog({
+      autoOpen:false,
+      resizable: false,
+      height: "auto",
+      width: 400,
+      modal: true,
+      buttons: {
+        OK: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+  } );
+
+
+
+ function checkInputAlphaNumeric(e){
+ 	var regex = new RegExp("^[a-zA-Z0-9]+$");
+    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (regex.test(str)) {
+        return true;
+    }
+
+    e.preventDefault();
+    return false;
+ }
+
+
+
+  </script>
+
+
+</head>
+
+
+<body ng-app="myApp" ng-controller="DashboardCtrl" style="background-color: #03A9F4;" >
+
+
+
+
+
+<!-- -----------------DELETE IF NOT WORKING-------------------------- -->
+
+<div class="container-fluid">
+
+    <!--error message box-->
+        <div id="dialog-error" >
+          <p><span class="glyphicon glyphicon-alert" style="float:left; margin:12px 12px 20px 0; color:red; font-size: 1.7em"></span>{{errorMessage}}</p>
+        </div>
+        <!---->
+
+        <!--success message box-->
+        <div id="dialog-success">
+          <p><span class="glyphicon glyphicon-ok" style="float:left; margin:12px 12px 20px 0; color:green; font-size: 1.7em"></span>{{successMessage}}</p>
+        </div>
+        <!---->
+
+          
+
+      <div class="form-wrap">
+      <div class="logo">
+                <center>
+                    <img style="width: 25%" src="assets/images/logo-white.png"/><br/>
+                </center>    
+          </div>
+            
+            <h4 style="color: white;">Please login in order to proceed</h4>
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">  <i class="glyphicon glyphicon-user"></i></span>
+              <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" ng-model="username" id="">
+            </div>
+            <br/>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">  <i class="glyphicon glyphicon-lock"></i></span>
+              <input type="password"  class="form-control" placeholder="Password" aria-describedby="basic-addon2" ng-model="password"  id="">
+              </div>
+              <br/>
+            <button ng-click="login(username,password)" class="btn btn-default btn-md btn-outline btn-rounded">Login</button>
+        </div>
+    
+
+
+
+
+
+
+
+
+
+
+        <footer class="footer" id="footerScroll" >
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    
+                </nav>
+                <p class="copyright pull-right">
+                    &copy; {{dateNow | date:'yyyy'}} <a href="http://www.igniterspace.com" style="color:white;">IgniterSpace</a>
+                </p>
+            </div>
+        </footer>
+
+
+
+</div> <!--/container-fluid-->
+
+
+</body>
+</html>

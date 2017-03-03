@@ -23,7 +23,10 @@
 
 	<!--Using light bootstrap dashboard-->
 	<!--  Light Bootstrap Table core CSS    -->
-    <link href="css/light-bootstrap-dashboard.css" rel="stylesheet"/>
+		 <link href="css/light-bootstrap-dashboard.css" rel="stylesheet"/>
+
+
+   
 
 <link href="css/myCss.css" rel="stylesheet"><!--custom style sheet-->
 
@@ -75,6 +78,12 @@
 
 
 
+function scrollTo() {
+	$('.main-panel').animate({
+        scrollTop: $("#footerScroll").offset().top
+    }, 2000);
+}
+
 
 
   </script>
@@ -92,7 +101,7 @@
 
 
 <!-- -----------------DELETE IF NOT WORKING-------------------------- -->
-<div class="wrapper">
+<div class="wrapper"  >
 
 	<div class="sidebar" data-color="blue">
 
@@ -241,7 +250,7 @@
 
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h4>Student Details</h4>
+							<h3>Student Details</h3>
 						</div>
 						<div class="panel-body">
 							<div class="table-responsive">
@@ -264,34 +273,34 @@
 
 
 			                            
-					<!-------------------------------------For the calculation and display of monthly payment-->
-					<div class="card col-md-12">
+					<!--For the calculation and display of monthly payment-->
+					<div class="card col-md-12" style="padding:15px;">
 						<h3>Payment Buttons</h3>
 				        
-				        	<div class="btn-group btn-group-lg" role="group">
+				        	<div class="btn-group btn-group-lg" >
 				        			
 
 
-					        		<button ng-show="registration"  class="btn btn-success btn-outline btn-rounded" ng-click="openPaymentForm(0)">Registration</button> <!--payment done-->
-					        		<button ng-hide="registration"  class="btn btn-danger btn-outline btn-rounded" ng-click="openForm(0)" ng-model="registration">Registration</button> <!--payment not done-->
+					        		<button ng-show="registration"  class="btn btn-success btn-outline" ng-click="openPaymentForm(0)">Registration</button> <!--payment done-->
+					        		<button ng-hide="registration"  class="btn btn-danger btn-outline" ng-click="openForm(0)" ng-model="registration">Registration</button> <!--payment not done-->
 					        	
-					        		<button ng-show="payment1"  class="btn btn-success btn-outline btn-rounded" ng-click="openPaymentForm(1)">Payment 1</button>
-					        		<button ng-hide="payment1"  class="btn btn-danger btn-outline btn-rounded" ng-click="openForm(1)">Payment 1</button>
+					        		<button ng-show="payment1"  class="btn btn-success btn-outline" ng-click="openPaymentForm(1)">Payment 1</button>
+					        		<button ng-hide="payment1"  class="btn btn-danger btn-outline" ng-click="openForm(1)">Payment 1</button>
 					        	
-						     		<button ng-show="payment2"  class="btn btn-success btn-outline btn-rounded" ng-click="openPaymentForm(2)">Payment 2</button>
-						        	<button ng-hide="payment2"  class="btn btn-danger btn-outline btn-rounded" ng-click="openForm(2)">Payment 2</button>
+						     		<button ng-show="payment2"  class="btn btn-success btn-outline" ng-click="openPaymentForm(2)">Payment 2</button>
+						        	<button ng-hide="payment2"  class="btn btn-danger btn-outline" ng-click="openForm(2)">Payment 2</button>
 						        
-					        		<button ng-show="payment3"  class="btn btn-success btn-outline btn-rounded" ng-click="openPaymentForm(3)">Payment 3</button>
-					        		<button ng-hide="payment3"  class="btn btn-danger btn-outline btn-rounded" ng-click="openForm(3)">Payment 3</button>
+					        		<button ng-show="payment3"  class="btn btn-success btn-outline" ng-click="openPaymentForm(3)">Payment 3</button>
+					        		<button ng-hide="payment3"  class="btn btn-danger btn-outline" ng-click="openForm(3)">Payment 3</button>
 					        	
-						        	<button ng-show="payment4"  class="btn btn-success btn-outline btn-rounded" ng-click="openPaymentForm(4)">Payment 4</button>
-						        	<button ng-hide="payment4"  class="btn btn-danger btn-outline btn-rounded" ng-click="openForm(4)">Payment 4</button>
+						        	<button ng-show="payment4"  class="btn btn-success btn-outline" ng-click="openPaymentForm(4)">Payment 4</button>
+						        	<button ng-hide="payment4"  class="btn btn-danger btn-outline" ng-click="openForm(4)">Payment 4</button>
 						        
-						        	<button ng-show="payment5"  class="btn btn-success btn-outline btn-rounded" ng-click="openPaymentForm(5)">Payment 5</button>
-						        	<button ng-hide="payment5"  class="btn btn-danger btn-outline btn-rounded" ng-click="openForm(5)">Payment 5</button>
+						        	<button ng-show="payment5"  class="btn btn-success btn-outline" ng-click="openPaymentForm(5)">Payment 5</button>
+						        	<button ng-hide="payment5"  class="btn btn-danger btn-outline" ng-click="openForm(5)">Payment 5</button>
 						        
-						        	<button ng-show="payment6"  class="btn btn-success btn-outline btn-rounded" ng-click="openPaymentForm(6)">Payment 6</button>
-						        	<button ng-hide="payment6"  class="btn btn-danger btn-outline btn-rounded" ng-click="openForm(6)">Payment 6</button>
+						        	<button ng-show="payment6"  class="btn btn-success btn-outline" ng-click="openPaymentForm(6)">Payment 6</button>
+						        	<button ng-hide="payment6"  class="btn btn-danger btn-outline" ng-click="openForm(6)">Payment 6</button>
 						    
 
 
@@ -311,6 +320,7 @@
 
 
 					<div id="attButtons">
+
 							<div class="col-md-6">
 							<div ng-hide="markingAtt">
 								<button ng-click="markAttendance()" class="btn btn-primary btn-lg btn-outline btn-rounded">Mark Attendance</button>
@@ -336,10 +346,11 @@
 							<div ng-show="viewingAtt">
 
 								<button ng-click="hideAttendance()" class="btn btn-primary btn-lg btn-outline btn-rounded">Hide Attendance</button><!--CODE THIS LATER-->
+
 									<br/><br/>
 									<div class="panel panel-default" id="panelAttendance" autoscroll="true">
 										<div class="panel-heading">		
-											<h4>Attendance Table for {{name}} ({{reg_no}})</h4>
+											<h4>Attendance Report for {{name}} ({{reg_no}})</h4>
 										</div>
 										<div class="panel-body">
 											<div class="table-responsive">
@@ -351,6 +362,9 @@
 													</tr>
 												</table>
 											</div>
+										</div>
+										<div class="panel-footer">
+											<button class="btn btn-primary btn-md btn-outline btn-rounded" ng-click="printMe()">Print Attendance Report</button>
 										</div>
 									</div>
 								
@@ -416,7 +430,7 @@
 </div> 
 
 
-	<footer class="footer">
+	<footer class="footer" id="footerScroll">
             <div class="container-fluid">
                 <nav class="pull-left">
                     
