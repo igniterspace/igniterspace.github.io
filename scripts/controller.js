@@ -4,10 +4,12 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
   myApp.config(function($routeProvider){
     $routeProvider
     .when('/',{
-      templateUrl: 'login.html'
+      templateUrl: 'login.html',
+      controller: 'LoginCtrl'
     })
     .when('/index',{
-      templateUrl: 'index.html' //change this later 
+      templateUrl: 'index.html', //change this later 
+      controller: 'DashboardCtrl'
     })
     .otherwise({
       redirectTo: '/'
