@@ -1,18 +1,103 @@
-var myApp = angular.module('myApp',["ngTable"]); //if not working remove ngTable from square brackets and leave it empty []
+var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remove ngTable from square brackets and leave it empty []
+
+//Delete if not working
+  myApp.config(function($routeProvider){
+    $routeProvider
+    .when('/',{
+      templateUrl: 'login.html'
+    })
+    .when('/index',{
+      templateUrl: 'index.html' //change this later 
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
+  });
+
+  myApp.controller('LoginCtrl',function($scope, $location){
+
+    $scope.dateNow = new Date(); //to get current date
+
+    $scope.login = function(){
+      var uname =$scope.username;
+      var password = $scope.password;
+      if($scope.username== 'admin' && $scope.password=='admin'){
+        $location.path('/index'); //TRY TO MAKE THIS ANGULAR WAY WORK INSTEAD
+        //window.location.hash = '#/index';
+        //$scope.successDialog("Login successful", "Welcome to Igniter Space!!");
+        //window.location.href = 'index.html#/';
+          //$scope.$apply();
+      }
+      else
+      {
+              
+        $scope.errorDialog("Login failed!","Please make sure username and password are correct before logging in.")
+      }
+
+    };
+
+
+
+
+        //THIS FUNCTION IS TO DISPLAY ERROR MESSAGE 
+
+    $scope.errorDialog = function(errorTitle, errorMessage){
+
+      $scope.errorTitle = errorTitle;//title doesnt seem to work, so set errorTitle in this function
+      
+
+      $scope.errorMessage = errorMessage;
+
+     // $("dialog-confirm").setAttribute('title','HELLO WORLD');
+    //document.getElementById('dialog-confirm').message = "none";
+
+      $("#dialog-error").dialog('option', 'title', errorTitle)
+
+      $("#dialog-error").dialog('open');
+      
+
+          //can make this into a function with error title and error message
+    }
+
+
+
+//THIS FUNCTION IS TO DISPLAY SUCCESS MESSAGE
+
+    $scope.successDialog = function(successTitle, successMessage){
+
+      $scope.successTitle = successTitle;//title doesnt seem to work, so set errorTitle in this function
+      
+
+      $scope.successMessage = successMessage;
+
+     // $("dialog-confirm").setAttribute('title','HELLO WORLD');
+    //document.getElementById('dialog-confirm').message = "none";
+
+      $("#dialog-success").dialog('option', 'title', successTitle)
+
+      $("#dialog-success").dialog('open');
+    }
+
+  });
+
+  //---------------------
+
+
 
 	myApp.controller('DashboardCtrl', ['$scope', '$http','$filter', 'NgTableParams', '$location', '$anchorScroll','$window', function($scope, $http, $filter, NgTableParams, $location, $anchorScroll,$window) {
-    
 
     $scope.dateNow = new Date(); //to get current date
     var globalUsername = "igniter";
     var globalPassword = "1";
+
+  
 
 
   	$scope.loading = false;
     //THIS FUNCTION IS TO MARK ATTENDANCE
   	$scope.markAttendance = function(){
      // $route.reload();
-     $scope.loadingGif=true;
+     $scope.loadingGifMark=true;
   		$scope.markingAtt = true;
   		//if this url works, then try to put both in one script
   		//alert("Student id is : "+$scope.studentid);
@@ -22,18 +107,18 @@ var myApp = angular.module('myApp',["ngTable"]); //if not working remove ngTable
   			if(response.data == "ATTENDANCE FAILED"){
           $scope.errorDialog("Attendance Failed", "Today is not a class date");
           $scope.markingAtt = false; //show the button
-          $scope.loadingGif=false;
+          $scope.loadingGifMark=false;
   			}
         else if(response.data == "ATTENDANCE DUPLICATED"){
           $scope.errorDialog("Attendance already entered", "Attendance for this student has already been entered");
           $scope.markingAtt = false; //FUTURE IMPROVEMENT : If attendance already entered, maybe disable button or show another message
-          $scope.loadingGif=false;
+          $scope.loadingGifMark=false;
         }
         else
         {
           $scope.successDialog("Attendance Saved", "Attendance has been saved successfully");
     			$scope.markingAtt = false;
-          $scope.loadingGif=false;
+          $scope.loadingGifMark=false;
           //$scope.results=false;//to get back to menu
           //$scope.student_id=null;//clear the student id box
         }
@@ -53,7 +138,7 @@ $scope.printMe = function(){
     //-------------------------------
     //THIS FUNCTION IS TO VIEW ATTENDANCE
     $scope.viewAttendance = function(){
-      $scope.loadingGif = true
+      $scope.loadingGifView = true
       var url = "https://script.google.com/macros/s/AKfycbzcvdl840bsB3nneQmL2AYApFlccl9N-KOQacIllXVlyOuHaUo/exec?studentid="+$scope.studentid;
       $http.get(url)
       .then(function(response){
@@ -62,10 +147,10 @@ $scope.printMe = function(){
         if(response.data == "NO ATTENDANCE RECORD"){
           $scope.viewingAtt = false;
           $scope.errorDialog("Attendance not found", "Student has not attended any classes yet");
-          $scope.loadingGif=false;
+          $scope.loadingGifView=false;
         }else{
           $scope.viewingAtt = true;
-          $scope.loadingGif=false;
+          $scope.loadingGifView=false;
         //$scope.viewingAtt = false;
         //$scope.results = false; //to get back to menu
         
@@ -452,7 +537,7 @@ $scope.hideAttendance = function(){
 
 
 
-    $scope.login = function(username, password){
+    $scope.login = function(){
       var user = globalUsername;
       var pass = globalPassword;
 
@@ -462,7 +547,7 @@ $scope.hideAttendance = function(){
 
 
           //After form is submitted, check if login details are correct
-          if((username == user) && (password == pass)){
+          if(($scope.username == user) && ($scope.password == pass)){
             //enter the details to the transaction database (payment_logs table)
             
             $scope.successDialog("Login successful", "Welcome to Igniter Space!!");

@@ -25,6 +25,9 @@
 	<!--  Light Bootstrap Table core CSS    -->
 		 <link href="css/light-bootstrap-dashboard.css" rel="stylesheet"/>
 
+		 <!--Angular route for login routing-->
+		 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
+
 
    
 
@@ -182,8 +185,8 @@ function scrollTo() {
                         </li>
                         -->
                         <li>
-                            <a href="#">
-                                Log out
+                            <a href="#" ng-click="logout()">
+                                Logout
                             </a>
                         </li>
                     </ul>
@@ -327,7 +330,7 @@ function scrollTo() {
 								
 							</div>
 							<div ng-show="markingAtt">
-								<span class="loadingGif" ng-show="loadingGif">
+								<span class="loadingGifMark" ng-show="loadingGifMark">
 									<img id="mySpinner" src="assets/images/gears.gif" /><b>Marking attendance...</b>
 								</span>	
 							</div>
@@ -337,7 +340,7 @@ function scrollTo() {
 							<div ng-hide="viewingAtt">
 								<!-- if not working, put view attendancce button here -->
 								<button ng-click="viewAttendance()" class="btn btn-primary btn-lg btn-outline btn-rounded">View Attendance</button>
-								<span class="loadingGif" ng-show="loadingGif">
+								<span class="loadingGifView" ng-show="loadingGifView">
 									<img id="mySpinner" src="assets/images/gears.gif" /><b>Getting attendance...</b>
 								</span>	
 							</div>
@@ -380,7 +383,7 @@ function scrollTo() {
 					<!--we want login form to be shown after id is searched for-->
 						<!-- Popup Div Starts Here -->
 						<div id="popupLogin">
-						<!-- Contact Us Form -->
+						<!-- Payment Form -->
 							<form  id="form" method="post" name="form">
 									<!--put a cross image for close-->
 								<span id="closeForm" class="glyphicon glyphicon-remove-sign" ng-click="closeForm()"></span>
@@ -391,14 +394,30 @@ function scrollTo() {
 
 								<br/>
 
-
-								<input id="amount" name="amount" placeholder="Payment amount (in LKR)" type="number" class="form-control" ng-model="amount" min="1000" max="100000" required><br/>
+								<div class="input-group">
+									<span class="input-group-addon">LKR</span>
+									<input id="amount" name="amount" placeholder="Amount" type="number" class="form-control" ng-model="amount" min="1000" max="100000" aria-label="Amount (to the nearest Rs.)" required><br/>
+								</div>
 								<hr/>
-								<h4>Login verification</h4>
-								<input id="uname" name="uname" placeholder="User Name" type="text" class="form-control" ng-model="username" required><br/>
-								<input id="password" name="password" placeholder="Password" type="password" class="form-control" ng-model="password" required><br/>
+								<h5>Login to verify payment</h5>
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon1">  <i class="glyphicon glyphicon-user"></i></span>
+									<input id="uname" name="uname" placeholder="Username" type="text" class="form-control" ng-model="username" aria-describedby="basic-addon1" required><br/>
+								</div>
+								<br/>
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon2">  <i class="glyphicon glyphicon-lock"></i></span>
+									<input id="password" name="password" placeholder="Password" type="password" class="form-control" ng-model="password" aria-describedby="basic-addon2" required>
+								</div>
+								<br/>
 								<button id="submit"  class="btn btn-primary btn-lg btn-outline btn-rounded" ng-click="verifyPayment(username,password)">Make payment</button>
 								
+
+
+
+
+
+
 							</form>
 						</div>	
 						<!-- Popup Div Ends Here -->

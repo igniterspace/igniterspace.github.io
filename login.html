@@ -2,6 +2,8 @@
 <head>
 <title>Igniter Space</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+     <!--Angular route for login routing-->
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
     <script type="text/javascript" src="scripts/controller.js"></script>
 
     <link href="css/bootstrap.css" rel="stylesheet"/>
@@ -84,7 +86,7 @@
 </head>
 
 
-<body ng-app="myApp" ng-controller="DashboardCtrl" style="background-color: #03A9F4;" >
+<body ng-app="myApp" ng-controller="LoginCtrl" style="background-color: #03A9F4;" >
 
 
 
@@ -109,25 +111,26 @@
           
 
       <div class="form-wrap">
-      <div class="logo">
+          <div class="logo">
                 <center>
                     <img style="width: 25%" src="assets/images/logo-white.png"/><br/>
                 </center>    
           </div>
             
             <h4 style="color: white;">Please login in order to proceed</h4>
-
+            
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon1">  <i class="glyphicon glyphicon-user"></i></span>
               <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" ng-model="username" id="">
             </div>
             <br/>
             <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">  <i class="glyphicon glyphicon-lock"></i></span>
+              <span class="input-group-addon" id="basic-addon2">  <i class="glyphicon glyphicon-lock"></i></span>
               <input type="password"  class="form-control" placeholder="Password" aria-describedby="basic-addon2" ng-model="password"  id="">
-              </div>
+            </div>
               <br/>
-            <button ng-click="login(username,password)" class="btn btn-default btn-md btn-outline btn-rounded">Login</button>
+            <button ng-click="login()" class="btn btn-default btn-md btn-outline btn-rounded">Login</button>
+            
         </div>
     
 
