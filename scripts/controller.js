@@ -4,16 +4,17 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
   myApp.config(function($routeProvider){
     $routeProvider
     .when('/',{
-      templateUrl: 'igniterspace.github.io/index.html',
+      templateUrl: 'index.html',
       controller: 'LoginCtrl'
     })
     .when('/dashboard',{
-      templateUrl: 'igniterspace.github.io/dashboard.html', //change this later 
+      templateUrl: 'views/dashboard.html', //change this later 
       controller: 'DashboardCtrl'
     })
     .otherwise({
       redirectTo: '/'
     });
+    $locationProvider.html5Mode(true);
   });
 
   myApp.controller('LoginCtrl',function($scope, $location){
