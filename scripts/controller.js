@@ -4,11 +4,11 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
   myApp.config(function($routeProvider){
     $routeProvider
     .when('/',{
-      templateUrl: '/login.html',
+      templateUrl: '/index.html',
       controller: 'LoginCtrl'
     })
-    .when('/index',{
-      templateUrl: '/index.html', //change this later 
+    .when('/dashboard',{
+      templateUrl: '/dashboard.html', //change this later 
       controller: 'DashboardCtrl'
     })
     .otherwise({
@@ -24,7 +24,7 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
       var uname =$scope.username;
       var password = $scope.password;
       if($scope.username== 'admin' && $scope.password=='admin'){
-        $location.path('/index'); //TRY TO MAKE THIS ANGULAR WAY WORK INSTEAD
+        $location.path('/dashboard'); //TRY TO MAKE THIS ANGULAR WAY WORK INSTEAD
         //window.location.hash = '#/index';
         //$scope.successDialog("Login successful", "Welcome to Igniter Space!!");
         //window.location.href = 'index.html#/';
