@@ -8,13 +8,13 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
       controller: 'LoginCtrl'
     })
     .when('/dashboard',{
-      templateUrl: 'views/dashboard.html', //change this later 
+      templateUrl: 'dashboard.html',
       controller: 'DashboardCtrl'
     })
     .otherwise({
       redirectTo: '/'
     });
-    $locationProvider.html5Mode(true);
+
   });
 
   myApp.controller('LoginCtrl',function($scope, $location){
@@ -26,10 +26,9 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
       var password = $scope.password;
       if($scope.username== 'admin' && $scope.password=='admin'){
         $location.path('/dashboard'); //TRY TO MAKE THIS ANGULAR WAY WORK INSTEAD
-        //window.location.hash = '#/index';
         //$scope.successDialog("Login successful", "Welcome to Igniter Space!!");
-        //window.location.href = 'index.html#/';
-          //$scope.$apply();
+        //window.location.href = 'dashboard.html#/';
+        
       }
       else
       {
