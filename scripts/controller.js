@@ -4,7 +4,7 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
   myApp.config(function($routeProvider){
     $routeProvider
     .when('/',{
-      templateUrl: 'login.html',
+      templateUrl: '/login.html',
       controller: 'LoginCtrl'
     })
     .when('/index',{
