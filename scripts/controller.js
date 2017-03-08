@@ -8,7 +8,7 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
       controller: 'LoginCtrl'
     })
     .when('/dashboard',{
-      templateUrl: '/dashboard.html', //change this later 
+      templateUrl: './dashboard.html', //change this later 
       controller: 'DashboardCtrl'
     })
     .otherwise({
