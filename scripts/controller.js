@@ -4,11 +4,11 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
   myApp.config(function($routeProvider){
     $routeProvider
     .when('/',{
-      templateUrl: '/index.html',
+      templateUrl: 'igniterspace.github.io/index.html',
       controller: 'LoginCtrl'
     })
     .when('/dashboard',{
-      templateUrl: './dashboard.html', //change this later 
+      templateUrl: 'igniterspace.github.io/dashboard.html', //change this later 
       controller: 'DashboardCtrl'
     })
     .otherwise({
