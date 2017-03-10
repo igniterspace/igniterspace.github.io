@@ -211,7 +211,7 @@ $scope.printMe = function(){
        
 //scrollTo();
 
-       scrollTo();
+       $scope.scrollTo();
 
 } //else end
 
@@ -567,6 +567,14 @@ $scope.hideAttendance = function(){
       document.getElementById('paymentFormDiv').style.display = "none";
     }
 
+
+
+
+    $scope.scrollTo = function(){
+    	$('.main-panel').animate({
+    		scrollTop:$("#footerScroll").offset().top
+    	}, 2000);
+    }
 
 
 
