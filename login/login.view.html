@@ -1,0 +1,68 @@
+
+
+
+<!-- -----------------DELETE IF NOT WORKING-------------------------- -->
+
+<div class="container-fluid" ng-controller="LoginCtrl" id="loginForm">
+
+    <!--error message box-->
+        <div id="dialog-error" >
+          <p><span class="glyphicon glyphicon-alert" style="float:left; margin:12px 12px 20px 0; color:red; font-size: 1.7em"></span>{{errorMessage}}</p>
+        </div>
+        <!---->
+
+        <!--success message box-->
+        <div id="dialog-success">
+          <p><span class="glyphicon glyphicon-ok" style="float:left; margin:12px 12px 20px 0; color:green; font-size: 1.7em"></span>{{successMessage}}</p>
+        </div>
+        <!---->
+
+          
+
+      <div class="form-wrap">
+          <div class="logo">
+                <center>
+                    <img style="width: 25%" src="./assets/images/logo-white.png"/><br/>
+                </center>    
+          </div>
+            
+            <h4 style="color: white;">Please login in order to proceed</h4>
+            
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">  <i class="glyphicon glyphicon-user"></i></span>
+              <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" ng-model="username" id="">
+            </div>
+            <br/>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">  <i class="glyphicon glyphicon-lock"></i></span>
+              <input type="password"  class="form-control" placeholder="Password" aria-describedby="basic-addon2" ng-model="password"  id="">
+            </div>
+              <br/>
+            <button ng-click="login()" class="btn btn-default btn-md btn-outline btn-rounded">Login</button>
+            
+        </div>
+    
+
+
+
+
+
+
+
+
+
+
+  
+
+
+</div> <!--/container-fluid-->
+      <footer class="footer" id="footerScroll" style="background-color: #03A9F4;">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    
+                </nav>
+                <p class="copyright pull-right">
+                    &copy; {{dateNow | date:'yyyy'}} <a href="http://www.igniterspace.com" style="color:white;">IgniterSpace</a>
+                </p>
+            </div>
+        </footer>
