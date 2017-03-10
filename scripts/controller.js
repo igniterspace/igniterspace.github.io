@@ -631,12 +631,6 @@ $scope.hideAttendance = function(){
 
 
 
-$(function scrollTo() {
-  $('.main-panel').animate({
-        scrollTop: $("#footerScroll").offset().top
-    }, 2000);
-});
-
 //----
 
 
