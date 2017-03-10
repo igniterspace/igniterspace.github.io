@@ -35,7 +35,7 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
 
     $scope.login = function(){
 
-      if($scope.username== 'igniterspace123' && $scope.password=='admin'){
+      if($scope.username == globalUsername && $scope.password == globalPassword){
         $rootScope.loggedIn = true;
         $location.path('/dashboard'); //TRY TO MAKE THIS ANGULAR WAY WORK INSTEAD
         //$scope.successDialog("Login successful", "Welcome to Igniter Space!!");
