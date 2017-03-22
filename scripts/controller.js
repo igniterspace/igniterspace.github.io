@@ -11,7 +11,7 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
       resolve: {
         "check": function($location, $rootScope){
           if(!$rootScope.loggedIn){ //if its not logged in, redirect to login page
-            $location.path('/');
+            $location.path('/');  //CHANGE THE PATH TO $location.path('/') AFTER ALL CHANGES ARE MADE
 
           }
         }
@@ -29,17 +29,27 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
   myApp.controller('LoginCtrl',function($scope, $location, $rootScope){
 
     $scope.dateNow = new Date(); //to get current date
-	var globalUsername = "igniterspace";
+	  var globalUsername = "igniterspace"; //global is narahenpita branch
     var globalPassword = "ecapsretingi";
+
+    var gampahaUsername = "ignitergampaha";
+    var gampahaPassword = "ahapmagretingi";
 
 
     $scope.login = function(){
 
       if(($scope.username == globalUsername) && ($scope.password == globalPassword)){
+        $rootScope.branch = "narahenpita";
         $rootScope.loggedIn = true;
-        $location.path('/dashboard'); //TRY TO MAKE THIS ANGULAR WAY WORK INSTEAD
-        //$scope.successDialog("Login successful", "Welcome to Igniter Space!!");
-        //window.location.href = 'dashboard.html#/';
+        $location.path('/dashboard'); 
+
+
+      }
+      else if(($scope.username == gampahaUsername) && ($scope.password == gampahaPassword)){
+        $rootScope.branch = "gampaha";
+        $rootScope.loggedIn = true;
+        $location.path('/dashboard');
+
       }
       else
       {
@@ -116,11 +126,49 @@ $( function() {
     $scope.dateNow = new Date(); //to get current date
     var globalUsername = "igniterspace";
     var globalPassword = "ecapsretingi";
+    $scope.loading = false;
+
+    
+    //$scope.age_group_array = ["Beginner", "Master", "Leader"];
 
   
 
 
-  	$scope.loading = false;
+     $scope.age_group_array = {
+    "type": "select", 
+    "name": "",
+    "value": "Beginner", 
+    "values": [ "Beginner", "Master", "Leader"] 
+  };
+
+
+   
+
+    $scope.getRegNo = function(){
+
+      
+      alert("HELLO WORLD" +$scope.batchAdd + " "+$scope.$root.branch);
+
+      //if(!registrationFlag){ //if did not get registration number
+        //var url = "https://script.google.com/macros/s/AKfycbxlIbgY8FNxTUHOJ4isajDPFGRBGwXS9Aovvf8urw9-SUakqBSn/exec?studentid="+$scope.studentid+"&batch="+$scope.batch+"&markattendance=true";
+
+      //}
+
+
+      if($scope.batchAdd && $scope.age_group_array.value){
+        //if both these fields are filled then
+        var url = "https://script.google.com/macros/Sn/exec?age_group="+$scope.age_group_array.value+"&batch="+$scope.batchAdd+"&branch="+$rootScope.branch;
+        $http.get(url)
+        .then(function(response){
+
+        });
+      }
+
+    }
+
+
+
+  	
     //THIS FUNCTION IS TO MARK ATTENDANCE
   	$scope.markAttendance = function(){
      // $route.reload();
@@ -206,11 +254,6 @@ $scope.printMe = function(){
           return $scope.data;
         }
       });
-       //$("#panelAttendance").focus();
-       //focusAttendance();
-       
-//scrollTo();
-
        $scope.scrollTo();
 
 } //else end
@@ -228,6 +271,24 @@ $scope.hideAttendance = function(){
 
       }
 
+
+      //THIS FUNCTION IS TO ADD STUDENTS
+  $scope.openAddStudentForm = function(){
+    //$scope.results = false;
+    $scope.add = true;
+
+
+
+    //if data added  $scope.add=false
+
+  }
+
+  $scope.addStudent = function(){
+    $scope.viewingAtt = false;
+
+    var url = "https://script.google.com/macros/s/AKfycbxlIbgY8FNxTUHOJ4isajDPFGRBGwXS9Aovvf8urw9-SUakqBSn/exec?studentid="+student_id;
+
+  }
 
 //----------------------
 
@@ -575,24 +636,6 @@ $scope.hideAttendance = function(){
     		scrollTop:$("#footerScroll").offset().top
     	}, 2000);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //-----
