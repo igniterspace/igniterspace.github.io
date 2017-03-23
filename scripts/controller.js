@@ -11,7 +11,7 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
       resolve: {
         "check": function($location, $rootScope){
           if(!$rootScope.loggedIn){ //if its not logged in, redirect to login page
-            $location.path('/');
+            $location.path('/');  //CHANGE THE PATH TO $location.path('/') AFTER ALL CHANGES ARE MADE
 
           }
         }
@@ -29,17 +29,27 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
   myApp.controller('LoginCtrl',function($scope, $location, $rootScope){
 
     $scope.dateNow = new Date(); //to get current date
-	var globalUsername = "igniterspace";
+	  var globalUsername = "igniterspace"; //global is narahenpita branch
     var globalPassword = "ecapsretingi";
+
+    var gampahaUsername = "ignitergampaha";
+    var gampahaPassword = "ahapmagretingi";
 
 
     $scope.login = function(){
 
       if(($scope.username == globalUsername) && ($scope.password == globalPassword)){
+        $rootScope.branch = "narahenpita";
         $rootScope.loggedIn = true;
-        $location.path('/dashboard'); //TRY TO MAKE THIS ANGULAR WAY WORK INSTEAD
-        //$scope.successDialog("Login successful", "Welcome to Igniter Space!!");
-        //window.location.href = 'dashboard.html#/';
+        $location.path('/dashboard'); 
+
+
+      }
+      else if(($scope.username == gampahaUsername) && ($scope.password == gampahaPassword)){
+        $rootScope.branch = "gampaha";
+        $rootScope.loggedIn = true;
+        $location.path('/dashboard');
+
       }
       else
       {
@@ -116,11 +126,29 @@ $( function() {
     $scope.dateNow = new Date(); //to get current date
     var globalUsername = "igniterspace";
     var globalPassword = "ecapsretingi";
+    $scope.loading = false;
+
+    
+    //$scope.age_group_array = ["Beginner", "Master", "Leader"];
 
   
 
 
-  	$scope.loading = false;
+     $scope.age_group_array = {
+    "type": "select", 
+    "name": "",
+    "value": "Beginner", 
+    "values": [ "Beginner", "Master", "Leader"] 
+  };
+
+
+   
+
+    
+
+
+
+  	
     //THIS FUNCTION IS TO MARK ATTENDANCE
   	$scope.markAttendance = function(){
      // $route.reload();
@@ -206,11 +234,6 @@ $scope.printMe = function(){
           return $scope.data;
         }
       });
-       //$("#panelAttendance").focus();
-       //focusAttendance();
-       
-//scrollTo();
-
        $scope.scrollTo();
 
 } //else end
@@ -229,7 +252,43 @@ $scope.hideAttendance = function(){
       }
 
 
-//----------------------
+      //THIS FUNCTION IS TO ADD STUDENTS
+  $scope.openAddStudentForm = function(){
+    //$scope.results = false;
+    $scope.add = true;
+    $scope.scrollTo();
+
+
+
+    //if data added  $scope.add=false
+
+  }
+
+
+
+
+
+
+
+
+//THIS FUNCTION IS TO GET THE NEW REGISTRATION NUMBER, OR TO CREATE A NEW REGISTRATION NUMBER IF ITS A NEW BATCH
+$scope.getRegNo = function(){
+  if($scope.batchAdd && $scope.age_group_array.value){
+
+    //if both these fields are filled then
+    var url = "https://script.google.com/a/macros/igniterspace.com/s/AKfycbzmywTsQU2J4ZSAGSVi1CW8mnxbpdhEqaQNSJfORKU3_nZwLfo/exec?age_group="+$scope.age_group_array.value+"&batch="+$scope.batchAdd+"&branch="+$scope.$root.branch;
+    $http.get(url)
+    .then(function(response){
+      console.log(response);
+      //$scope.data = response.data;
+      $scope.data = response.data;
+      $scope.reg_noAdd = $scope.data.registrationNumber[0];
+    });
+  }
+  //else leave registration number field empty??
+
+}
+
 
     //THIS FUNCTION IS TO GET THE STUDENT DETAILS WITH STUDENT ID
     //THIS FUNCTION ALSO GETS THE PAYMENT DETAILS
@@ -430,79 +489,109 @@ $scope.hideAttendance = function(){
       document.getElementById('formDiv').style.display = "none";
     }
 
+
+
+//THIS FUNCTION IS TO ADD THE PAYMENT DETAILS INTO THE DATABASE
+
+  $scope.addStudent = function(){
+
+    if(($scope.batchAdd) && ($scope.reg_noAdd) && ($scope.kids_nameAdd) && ($scope.ageAdd) && ($scope.parents_nameAdd) && ($scope.emailAdd) && ($scope.phoneAdd) && ($scope.qr_codeAdd)){
+
+      $scope.viewingAtt = false;
+      $scope.reg_noAddFinal = $scope.batchAdd+""+$scope.reg_noAdd; //combine batch id with registration number to come up with final registration number , eg L + 1234 = L1234
+
+      //alert($scope.reg_noAddFinal);
+
+      //var url = "https://script.google.com/macros/s/AKfycbxlIbgY8FNxTUHOJ4isajDPFGRBGwXS9Aovvf8urw9-SUakqBSn/exec?studentid="+student_id;
+      var url = "https://script.google.com/macros/s/AKfycbzmywTsQU2J4ZSAGSVi1CW8mnxbpdhEqaQNSJfORKU3_nZwLfo/exec?age_group="+$scope.age_group_array.value+"&batch="+$scope.batchAdd+"&reg_no="+$scope.reg_noAddFinal+"&kids_name="+
+      $scope.kids_nameAdd+"&age="+$scope.ageAdd+"&parents_name="+$scope.parents_nameAdd+"&email="+$scope.emailAdd+"&phone="+$scope.phoneAdd+"&qr="+$scope.qr_codeAdd+"&branch="+$scope.$root.branch;
+
+      $http.get(url)
+      .then(function(response){
+        if(response.data == -1){
+          alert("STUDENT NOT ADDED")
+        }
+      });
+
+      $scope.successDialog("Student added", "Student is successfully registered with IgniterSpace.");
+
+      //clear all the text boxes
+      $scope.batchAdd = null;
+      $scope.reg_noAdd = null;
+      $scope.reg_noAddFinal = null;
+      $scope.kids_nameAdd = null;
+      $scope.ageAdd = null;
+      $scope.parents_nameAdd = null;
+      $scope.emailAdd = null;
+      $scope.phoneAdd = null;
+      $scope.qr_codeAdd = null;
+    }else{
+      $scope.errorDialogDash("Registration Failed", "Please fill all the fields to register the student.");
+    }
+
+  }
+
+
     //THIS FORM IS TO CHECK THE DETAILS IN THE VERIFY FORM AND THEN ADD THE DETAILS TO PAYMENT GOOGLE SHEETS
     $scope.verifyPayment = function(username, password){
       //first hardcode the username and password, later use the google sheet
       var uname = globalUsername;
       var pass = globalPassword;
 
-
-
-
-
-
- // Fix issue with html5 validation
- //here we are giving time to validate payment form.
+     // Fix issue with html5 validation
+     //here we are giving time to validate payment form.
     if (form.checkValidity && !form.checkValidity()) {
       return;
     }
 
-
-
       //After form is submitted, check if login details are correct
       if((username == uname) && (password == pass)){
-        //enter the details to the transaction database (payment_logs table)
+          //enter the details to the transaction database (payment_logs table)
 
-        //-----------------------------------------
-      var url = "https://script.google.com/macros/s/AKfycbzcvdl840bsB3nneQmL2AYApFlccl9N-KOQacIllXVlyOuHaUo/exec?studentid="+$scope.studentid+"&payment_type="+$scope.payment_type+"&amount="+$scope.amount+"&batch="+$scope.batch;
-              $http.get(url)
-              .then(function(response){
-                if(response.data == -1){
-                  alert("Invalid ! This is not the date of a class")
-                }
-                
-              });
+          //-----------------------------------------
+        var url = "https://script.google.com/macros/s/AKfycbzcvdl840bsB3nneQmL2AYApFlccl9N-KOQacIllXVlyOuHaUo/exec?studentid="+$scope.studentid+"&payment_type="+$scope.payment_type+"&amount="+$scope.amount+"&batch="+$scope.batch;
+                $http.get(url)
+                .then(function(response){
+                  if(response.data == -1){
+                    alert("Invalid ! This is not the date of a class")
+                  }
+                  
+                });
 
-        //-----------------------------------------
+          //-----------------------------------------
 
-        $scope.successDialog("Payment entered", "Payment entered successfully by verified user.");
-        
-        $scope.closeForm();
+          $scope.successDialog("Payment entered", "Payment entered successfully by verified user.");
+          
+          $scope.closeForm();
 
-
-
-        //after payment is made set the payment buttons
-
-
-      if($scope.payment_type == "registration"){
-        $scope.registration = true;
-      }else
-      if($scope.payment_type == "monthly1")
-      {
-        $scope.payment1 = true;
-      }else
-      if($scope.payment_type == "monthly2")
-      {
-        $scope.payment2 = true;
-      }else
-      if($scope.payment_type == "monthly3")
-      {
-        $scope.payment3 = true;
-      }else
-      if($scope.payment_type == "monthly4")
-      {
-        $scope.payment4 = true;
-      }else
-      if($scope.payment_type == "monthly5")
-      {
-        $scope.payment5 = true;
-      }else
-      if($scope.payment_type == "monthly6")
-      {
-        $scope.payment6 = true;
-      }
-      
-        
+          //after payment is made set the payment buttons
+        if($scope.payment_type == "registration"){
+          $scope.registration = true;
+        }else
+        if($scope.payment_type == "monthly1")
+        {
+          $scope.payment1 = true;
+        }else
+        if($scope.payment_type == "monthly2")
+        {
+          $scope.payment2 = true;
+        }else
+        if($scope.payment_type == "monthly3")
+        {
+          $scope.payment3 = true;
+        }else
+        if($scope.payment_type == "monthly4")
+        {
+          $scope.payment4 = true;
+        }else
+        if($scope.payment_type == "monthly5")
+        {
+          $scope.payment5 = true;
+        }else
+        if($scope.payment_type == "monthly6")
+        {
+          $scope.payment6 = true;
+        }  
       }else{
         //display errorDialog and close the form
         $scope.errorDialogDash("Login verification failed", "Enter the correct username and password to complete verification");
@@ -524,17 +613,11 @@ $scope.hideAttendance = function(){
     //document.getElementById('dialog-confirm').message = "none";
 
 
-
-
-
       $("#dialog-errorDash").dialog('option', 'title', errorTitle)
 
       $("#dialog-errorDash").dialog('open');
       
-//var theDialog = $("#dialog-error").dialog(opt);
-//theDialog.dialog('option','title',errorTitle)
-//theDialog.dialog("open");
-          //can make this into a function with error title and error message
+
     }
 
 
@@ -579,22 +662,6 @@ $scope.hideAttendance = function(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //-----
 
   $( function() {
@@ -613,7 +680,7 @@ $scope.hideAttendance = function(){
   } );
 
   $( function() {
-    $( "#dialog-successDash" ).dialog({
+    $( "#dialog-success" ).dialog({
       autoOpen:false,
       resizable: false,
       height: "auto",

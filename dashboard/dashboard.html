@@ -113,7 +113,7 @@
         <!---->
 
         <!--success message box-->
-        <div id="dialog-successDash">
+        <div id="dialog-success">
           <p><span class="glyphicon glyphicon-ok" style="float:left; margin:12px 12px 20px 0; color:green; font-size: 1.7em"></span>{{successMessage}}</p>
         </div>
         <!---->
@@ -123,9 +123,13 @@
 
 
 				<div ng-hide="results" class="col-md-12 content" ng-hide="loading">
+
+				<button ng-click="openAddStudentForm()" class="btn btn-primary btn-lg btn-outline btn-rounded">Add Student</button>
+
+
 					<div class="jumbotron">
-				    	<h1 >Attendance System</h1> 
-				    	 
+				    	<h2 class="text-capitalize">Attendance System - {{$root.branch}}</h2> 
+				    	
 
 				    	<hr>
 				    	<h4>Enter Student ID</h4>
@@ -142,7 +146,81 @@
 				</div>
 
 
-				
+				<!--Add Student div-->
+				<div ng-show="add" class="col-md-12 content">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3>Student Registration</h3>
+						</div>
+						<div class="panel-body">
+							<!--div class="form-wrap"-->
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon1">Age Group</span>
+									<select ng-model="age_group_array.value" class="form-control" ng-options="x for x in age_group_array.values"  aria-describedby="basic-addon1"></select>
+								</div>
+								
+
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon3">Batch</span>
+									<input type="text" class="form-control" placeholder="Batch" aria-describedby="basic-addon3" ng-model="batchAdd" id="" ng-blur="getRegNo()">
+								</div>
+								
+
+
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon2">Registration Number</span>
+									<span class="input-group-addon" id="basic-addon2"><b>{{batchAdd}}</b></span>
+									<input type="text" class="form-control" placeholder="Registration Number" aria-describedby="basic-addon2" ng-model="reg_noAdd" readonly>
+								</div>
+								
+
+
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon4">Full Name</span>
+									<input type="text" class="form-control" placeholder="Full name" aria-describedby="basic-addon4" ng-model="kids_nameAdd">
+								</div>
+								
+
+
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon5">Age</span>
+									<input type="number" class="form-control" placeholder="Age" aria-describedby="basic-addon5" ng-model="ageAdd"  min="4" max="50">
+								</div>
+								
+
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon6">Parents Name</span>
+									<input type="text" class="form-control" placeholder="Parents name" aria-describedby="basic-addon6" ng-model="parents_nameAdd" id="">
+								</div>
+								
+
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon7">Email</span>
+									<input type="email" class="form-control" placeholder="Email" aria-describedby="basic-addon7" ng-model="emailAdd" id="">
+								</div>
+								
+
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon8">Phone</span>
+									<input type="number" class="form-control" placeholder="Phone number" aria-describedby="basic-addon8" ng-model="phoneAdd" id="">
+								</div>
+								
+
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon9">QR Code</span>
+									<input type="text" class="form-control" placeholder="QR code" aria-describedby="basic-addon9" ng-model="qr_codeAdd" id="">
+								</div>
+
+								<br/>
+
+								<button ng-click="addStudent()" class="btn btn-primary btn-md btn-outline btn-rounded">Add Student</button>
+							<!--/div--> 
+						</div>
+					</div>
+				</div>
+
+
+
 				<div ng-show="results" class="col-md-12 content">
 					
 					
