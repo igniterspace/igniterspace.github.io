@@ -144,7 +144,31 @@ $( function() {
 
    
 
+
     
+=======
+    $scope.getRegNo = function(){
+
+      
+      alert("HELLO WORLD" +$scope.batchAdd + " "+$scope.$root.branch);
+
+      //if(!registrationFlag){ //if did not get registration number
+        //var url = "https://script.google.com/macros/s/AKfycbxlIbgY8FNxTUHOJ4isajDPFGRBGwXS9Aovvf8urw9-SUakqBSn/exec?studentid="+$scope.studentid+"&batch="+$scope.batch+"&markattendance=true";
+
+      //}
+
+
+      if($scope.batchAdd && $scope.age_group_array.value){
+        //if both these fields are filled then
+        var url = "https://script.google.com/macros/Sn/exec?age_group="+$scope.age_group_array.value+"&batch="+$scope.batchAdd+"&branch="+$rootScope.branch;
+        $http.get(url)
+        .then(function(response){
+
+        });
+      }
+
+    }
+>>>>>>> origin/master
 
 
 
@@ -256,7 +280,10 @@ $scope.hideAttendance = function(){
   $scope.openAddStudentForm = function(){
     //$scope.results = false;
     $scope.add = true;
+<<<<<<< HEAD
     $scope.scrollTo();
+=======
+>>>>>>> origin/master
 
 
 
@@ -264,6 +291,7 @@ $scope.hideAttendance = function(){
 
   }
 
+<<<<<<< HEAD
 
 
 
@@ -289,6 +317,16 @@ $scope.getRegNo = function(){
 
 }
 
+=======
+  $scope.addStudent = function(){
+    $scope.viewingAtt = false;
+
+    var url = "https://script.google.com/macros/s/AKfycbxlIbgY8FNxTUHOJ4isajDPFGRBGwXS9Aovvf8urw9-SUakqBSn/exec?studentid="+student_id;
+
+  }
+
+//----------------------
+>>>>>>> origin/master
 
     //THIS FUNCTION IS TO GET THE STUDENT DETAILS WITH STUDENT ID
     //THIS FUNCTION ALSO GETS THE PAYMENT DETAILS
@@ -660,8 +698,11 @@ $scope.getRegNo = function(){
     }
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/master
 //-----
 
   $( function() {
