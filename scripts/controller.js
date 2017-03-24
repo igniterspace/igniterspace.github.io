@@ -43,6 +43,8 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
 
       if(($scope.username == globalUsername) && ($scope.password == globalPassword)){
         $rootScope.branch = "narahenpita";
+        $rootscope.uname = "igniterspace";
+        $rootscope.pwd = "ecapsretingi";
         $rootScope.loggedIn = true;
         $location.path('/dashboard'); 
 
@@ -50,6 +52,8 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
       }
       else if(($scope.username == gampahaUsername) && ($scope.password == gampahaPassword)){
         $rootScope.branch = "gampaha";
+        $rootScope.uname = "ignitergampaha";
+        $rootScope.pwd = "ahapmagretingi";
         $rootScope.loggedIn = true;
         $location.path('/dashboard');
 
@@ -119,8 +123,8 @@ $( function() {
   myApp.controller('DashboardCtrl', ['$scope', '$http','$filter', 'NgTableParams', '$location', '$anchorScroll','$window', function($scope, $http, $filter, NgTableParams, $location, $anchorScroll,$window) {
 
     $scope.dateNow = new Date(); //to get current date
-    var globalUsername = "igniterspace";
-    var globalPassword = "ecapsretingi";
+    var globalUsername = $scope.$root.uname;
+    var globalPassword = $scope.$root.pwd;
     $scope.loading = false;
 
     
@@ -299,6 +303,7 @@ $scope.getRegNo = function(){
     //THIS FUNCTION ALSO GETS THE PAYMENT DETAILS
     $scope.getStudentByID = function(student_id){
       $scope.viewingAtt = false; //when page loads , attendance should not be shown
+      $scope.add = false; // when search, add form should not be shown 
       
 
       if(!student_id){  //check if student_id is blank , null or whitespaces
