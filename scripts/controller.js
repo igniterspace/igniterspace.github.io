@@ -31,7 +31,7 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
     $scope.dateNow = new Date(); //to get current date
 
     //NARAHENPITA USERNAME AND PASSWORD
-	  var globalUsername = "igniterspace"; 
+    var globalUsername = "igniterspace"; 
     var globalPassword = "ecapsretingi";
 
     //GAMPAHA USERNAME AND PASSWORD
@@ -116,7 +116,7 @@ $( function() {
 
 
 
-	myApp.controller('DashboardCtrl', ['$scope', '$http','$filter', 'NgTableParams', '$location', '$anchorScroll','$window', function($scope, $http, $filter, NgTableParams, $location, $anchorScroll,$window) {
+  myApp.controller('DashboardCtrl', ['$scope', '$http','$filter', 'NgTableParams', '$location', '$anchorScroll','$window', function($scope, $http, $filter, NgTableParams, $location, $anchorScroll,$window) {
 
     $scope.dateNow = new Date(); //to get current date
     var globalUsername = "igniterspace";
@@ -145,22 +145,22 @@ $( function() {
 
 
 
-  	
+    
     //THIS FUNCTION IS TO MARK ATTENDANCE
-  	$scope.markAttendance = function(){
+    $scope.markAttendance = function(){
      // $route.reload();
      $scope.loadingGifMark=true;
-  		$scope.markingAtt = true;
-  		//if this url works, then try to put both in one script
-  		//alert("Student id is : "+$scope.studentid);
-  		var url = "https://script.google.com/macros/s/AKfycbxlIbgY8FNxTUHOJ4isajDPFGRBGwXS9Aovvf8urw9-SUakqBSn/exec?studentid="+$scope.studentid+"&batch="+$scope.batch+"&markattendance=true&branch="+$scope.$root.branch;
-  		$http.get(url)
-  		.then(function(response){
-  			if(response.data == "ATTENDANCE FAILED"){
+      $scope.markingAtt = true;
+      //if this url works, then try to put both in one script
+      //alert("Student id is : "+$scope.studentid);
+      var url = "https://script.google.com/macros/s/AKfycbxlIbgY8FNxTUHOJ4isajDPFGRBGwXS9Aovvf8urw9-SUakqBSn/exec?studentid="+$scope.studentid+"&batch="+$scope.batch+"&markattendance=true&branch="+$scope.$root.branch;
+      $http.get(url)
+      .then(function(response){
+        if(response.data == "ATTENDANCE FAILED"){
           $scope.errorDialogDash("Attendance Failed", "Today is not a class date");
           $scope.markingAtt = false; //show the button
           $scope.loadingGifMark=false;
-  			}
+        }
         else if(response.data == "ATTENDANCE DUPLICATED"){
           $scope.errorDialogDash("Attendance already entered", "Attendance for this student has already been entered");
           $scope.markingAtt = false; //FUTURE IMPROVEMENT : If attendance already entered, maybe disable button or show another message
@@ -169,13 +169,13 @@ $( function() {
         else
         {
           $scope.successDialog("Attendance Saved", "Attendance has been saved successfully");
-    			$scope.markingAtt = false;
+          $scope.markingAtt = false;
           $scope.loadingGifMark=false;
           //$scope.results=false;//to get back to menu
           //$scope.student_id=null;//clear the student id box
         }
-  		});
-  	}
+      });
+    }
 
 
 $scope.printMe = function(){
@@ -297,7 +297,7 @@ $scope.getRegNo = function(){
 
     //THIS FUNCTION IS TO GET THE STUDENT DETAILS WITH STUDENT ID
     //THIS FUNCTION ALSO GETS THE PAYMENT DETAILS
-  	$scope.getStudentByID = function(student_id){
+    $scope.getStudentByID = function(student_id){
       $scope.viewingAtt = false; //when page loads , attendance should not be shown
       
 
@@ -307,23 +307,23 @@ $scope.getRegNo = function(){
         $scope.errorDialogDash("Empty Student Id", "Student Id field cannot be empty.");
       }else{
         $scope.loadingGif = true;
-    		$scope.studentid = student_id;
-    		$scope.results = false;
-    		$scope.loading = true;
+        $scope.studentid = student_id;
+        $scope.results = false;
+        $scope.loading = true;
 
-    		var url = "https://script.google.com/macros/s/AKfycbxlIbgY8FNxTUHOJ4isajDPFGRBGwXS9Aovvf8urw9-SUakqBSn/exec?studentid="+student_id+"&branch="+$scope.$root.branch;
+        var url = "https://script.google.com/macros/s/AKfycbxlIbgY8FNxTUHOJ4isajDPFGRBGwXS9Aovvf8urw9-SUakqBSn/exec?studentid="+student_id+"&branch="+$scope.$root.branch;
 
-    		$http.get(url)
-    		.then(function(response){
-    			console.log(response);
+        $http.get(url)
+        .then(function(response){
+          console.log(response);
 
-    			$scope.data = response.data;
+          $scope.data = response.data;
 
-    			if($scope.data == "STUDENT DOES NOT EXIST"){
-    				$scope.errorDialogDash("Student does not exist", "Wrong Student Id has been entered. Please check it and try again!");
-    				$scope.loading = false;
+          if($scope.data == "STUDENT DOES NOT EXIST"){
+            $scope.errorDialogDash("Student does not exist", "Wrong Student Id has been entered. Please check it and try again!");
+            $scope.loading = false;
             $scope.loadingGif = false;
-    			}else{
+          }else{
 
 
               $scope.loadingGif=false;
@@ -407,14 +407,14 @@ $scope.getRegNo = function(){
                 $scope.payment6 = false;
               }
             }//end of if empty array 
-    			}
+          }
 
 
 
-    		});
+        });
 
       }
-  	}
+    }
 
 
     //THIS FUNCTION IS TO OPEN THE VERIFY FORM WHEN A PAYMENT IS CLICKED
@@ -658,9 +658,9 @@ $scope.getRegNo = function(){
 
 
     $scope.scrollTo = function(){
-    	$('.main-panel').animate({
-    		scrollTop:$("#footerScroll").offset().top
-    	}, 2000);
+      $('.main-panel').animate({
+        scrollTop:$("#footerScroll").offset().top
+      }, 2000);
     }
 
 
