@@ -43,8 +43,8 @@ var myApp = angular.module('myApp',['ngTable','ngRoute']); //if not working remo
 
       if(($scope.username == globalUsername) && ($scope.password == globalPassword)){
         $rootScope.branch = "narahenpita";
-        $rootscope.uname = "igniterspace";
-        $rootscope.pwd = "ecapsretingi";
+        $rootScope.uname = "igniterspace";
+        $rootScope.pwd = "ecapsretingi";
         $rootScope.loggedIn = true;
         $location.path('/dashboard'); 
 
