@@ -504,7 +504,7 @@ $scope.getRegNo = function(){
 
   $scope.addStudent = function(){
 
-    if(($scope.batchAdd) && ($scope.reg_noAdd) && ($scope.kids_nameAdd) && ($scope.ageAdd) && ($scope.parents_nameAdd) && ($scope.emailAdd) && ($scope.phoneAdd)){
+    if(($scope.batchAdd) && ($scope.reg_noAdd) && ($scope.kids_nameAdd) && ($scope.ageAdd) && ($scope.parents_nameAdd) && ($scope.phoneAdd)){
 
       $scope.viewingAtt = false;
       $scope.reg_noAddFinal = $scope.batchAdd+""+$scope.reg_noAdd; //combine batch id with registration number to come up with final registration number , eg L + 1234 = L1234
