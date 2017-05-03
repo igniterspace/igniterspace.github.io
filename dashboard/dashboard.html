@@ -107,13 +107,13 @@
 
 
 				<!--error message box-->
-        <div id="dialog-errorDash" >
+        <div id="dialog-errorDashboard" >
           <p><span class="glyphicon glyphicon-alert" style="float:left; margin:12px 12px 20px 0; color:red; font-size: 1.7em"></span>{{errorMessage}}</p>
         </div>
         <!---->
 
         <!--success message box-->
-        <div id="dialog-success">
+        <div id="dialog-successDashboard">
           <p><span class="glyphicon glyphicon-ok" style="float:left; margin:12px 12px 20px 0; color:green; font-size: 1.7em"></span>{{successMessage}}</p>
         </div>
         <!---->
@@ -182,7 +182,7 @@
 
 								<div class="input-group">
 									<span class="input-group-addon" id="basic-addon5">Age</span>
-									<input type="number" class="form-control" placeholder="Age" aria-describedby="basic-addon5" ng-model="ageAdd"  min="4" max="50">
+									<input type="number" class="form-control" placeholder="Age" aria-describedby="basic-addon5" ng-model="ageAdd">
 								</div>
 								
 								
@@ -246,41 +246,87 @@
 
 			                            
 					<!--For the calculation and display of monthly payment-->
-					<div class="card col-md-12" style="padding:15px;">
-						<h3>Payment Buttons</h3>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3>Payment</h3>
+						</div>
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-bordered table-striped table-responsive">
+									<tr class="text-center">
+										<td>
+											<button ng-show="registration"  class="btn btn-md btn-success btn-outline" ng-click="openPaymentForm(0)">Registration</button> <!--payment done-->
+					        				<button ng-hide="registration"  class="btn btn-md btn-danger btn-outline" ng-click="openForm(0)" ng-model="registration">Registration</button> <!--payment not done-->
+					        			</td>
+					        			<td>
+					        				<button ng-show="payment1"  class="btn btn-md btn-success btn-outline" ng-click="openPaymentForm(1)">Payment 1</button>
+					        				<button ng-hide="payment1"  class="btn btn-md btn-danger btn-outline" ng-click="openForm(1)">Payment 1</button>
+					        			</td>
+					        			<td>
+					        				<button ng-show="payment2"  class="btn btn-md btn-success btn-outline" ng-click="openPaymentForm(2)">Payment 2</button>
+						        			<button ng-hide="payment2"  class="btn btn-md btn-danger btn-outline" ng-click="openForm(2)">Payment 2</button>
+					        			</td>
+					        			<td>
+					        				<button ng-show="payment3"  class="btn btn-md btn-success btn-outline" ng-click="openPaymentForm(3)">Payment 3</button>
+					        				<button ng-hide="payment3"  class="btn btn-md btn-danger btn-outline" ng-click="openForm(3)">Payment 3</button>
+					        			</td>
+					        			<td>
+					        				<button ng-show="payment4"  class="btn btn-md btn-success btn-outline" ng-click="openPaymentForm(4)">Payment 4</button>
+						        			<button ng-hide="payment4"  class="btn btn-md btn-danger btn-outline" ng-click="openForm(4)">Payment 4</button>
+					        			</td>
+					        			<td>
+					        				<button ng-show="payment5"  class="btn btn-md btn-success btn-outline" ng-click="openPaymentForm(5)">Payment 5</button>
+						        			<button ng-hide="payment5"  class="btn btn-md btn-danger btn-outline" ng-click="openForm(5)">Payment 5</button>
+					        			</td>
+					        			<td>
+					        				<button ng-show="payment6"  class="btn btn-md btn-success btn-outline" ng-click="openPaymentForm(6)">Payment 6</button>
+						        			<button ng-hide="payment6"  class="btn btn-md btn-danger btn-outline" ng-click="openForm(6)">Payment 6</button>
+					        			</td>
+									</tr>
+
+									<tr id="pmtDetails" ng-show="pmtDetailsRow">
+										<td ng-show ="registration">Date: <b>{{paymentArray[0].date | date:'mediumDate'}}</b><br/>
+										Amount: <b>{{paymentArray[0].amount}}</b></td>
+										<td class="emptyTableCell" ng-hide="registration"></td>
+
+										<td ng-show="payment1">Date: <b>{{paymentArray[1].date | date:'mediumDate'}}</b><br/>
+										Amount: <b>{{paymentArray[1].amount}}</b></b></td>
+										<td class="emptyTableCell" ng-hide="payment1"></td>
+
+										<td ng-show="payment2">Date: <b>{{paymentArray[2].date | date:'mediumDate'}}</b><br/>
+										Amount: <b>{{paymentArray[2].amount}}</b></b></td>
+										<td class="emptyTableCell" ng-hide="payment2"></td>
+
+										<td ng-show="payment3">Date: <b>{{paymentArray[3].date | date:'mediumDate'}}</b><br/>
+										Amount: <b>{{paymentArray[3].amount}}</b></b></td>
+										<td class="emptyTableCell" ng-hide="payment3"></td>
+
+										<td ng-show="payment4">Date: <b>{{paymentArray[4].date | date:'mediumDate'}}</b><br/>
+										Amount: <b>{{paymentArray[4].amount}}</b></b></td>
+										<td class="emptyTableCell" ng-hide="payment4"></td>
+
+										<td ng-show="payment5">Date: <b>{{paymentArray[5].date | date:'mediumDate'}}</b><br/>
+										Amount: <b>{{paymentArray[5].amount}}</b></b></td>
+										<td class="emptyTableCell" ng-hide="payment5"></td>
+
+										<td ng-show="payment6">Date: <b>{{paymentArray[6].date | date:'mediumDate'}}</b><br/>
+										Amount: <b>{{paymentArray[6].amount}}</b></b></td>
+										<td class="emptyTableCell" ng-hide="payment6"></td>
+									</tr>
+
+
+								</table>
+							</div>
+
+						</div>
+					</div>
+						
 				        
-				        	<div class="btn-group btn-group-lg" >
+				        	<!--div class="btn-group btn-group-lg" -->
 				        			
 
 
-					        		<button ng-show="registration"  class="btn btn-success btn-outline" ng-click="openPaymentForm(0)">Registration</button> <!--payment done-->
-					        		<button ng-hide="registration"  class="btn btn-danger btn-outline" ng-click="openForm(0)" ng-model="registration">Registration</button> <!--payment not done-->
-					        	
-					        		<button ng-show="payment1"  class="btn btn-success btn-outline" ng-click="openPaymentForm(1)">Payment 1</button>
-					        		<button ng-hide="payment1"  class="btn btn-danger btn-outline" ng-click="openForm(1)">Payment 1</button>
-					        	
-						     		<button ng-show="payment2"  class="btn btn-success btn-outline" ng-click="openPaymentForm(2)">Payment 2</button>
-						        	<button ng-hide="payment2"  class="btn btn-danger btn-outline" ng-click="openForm(2)">Payment 2</button>
-						        
-					        		<button ng-show="payment3"  class="btn btn-success btn-outline" ng-click="openPaymentForm(3)">Payment 3</button>
-					        		<button ng-hide="payment3"  class="btn btn-danger btn-outline" ng-click="openForm(3)">Payment 3</button>
-					        	
-						        	<button ng-show="payment4"  class="btn btn-success btn-outline" ng-click="openPaymentForm(4)">Payment 4</button>
-						        	<button ng-hide="payment4"  class="btn btn-danger btn-outline" ng-click="openForm(4)">Payment 4</button>
-						        
-						        	<button ng-show="payment5"  class="btn btn-success btn-outline" ng-click="openPaymentForm(5)">Payment 5</button>
-						        	<button ng-hide="payment5"  class="btn btn-danger btn-outline" ng-click="openForm(5)">Payment 5</button>
-						        
-						        	<button ng-show="payment6"  class="btn btn-success btn-outline" ng-click="openPaymentForm(6)">Payment 6</button>
-						        	<button ng-hide="payment6"  class="btn btn-danger btn-outline" ng-click="openForm(6)">Payment 6</button>
-						    
-
-
-
-						    
-						    </div>
-					    </div>   
-
+			
 
 
 			                                
@@ -365,12 +411,12 @@
 
 								<div class="input-group">
 									<span class="input-group-addon">LKR</span>
-									<input id="amount" name="amount" placeholder="Amount" type="number" class="form-control" ng-model="amount" min="1000" max="100000" aria-label="Amount (to the nearest Rs.)" required><br/>
+									<input id="amount" name="amount" placeholder="Amount" type="number" class="form-control" ng-model="amount" aria-label="Amount (to the nearest Rs.)" required><br/>
 								</div>
 								<br/>
 								<div class="input-group">
 									<span class="input-group-addon" id="basic-addon3">  <i class="glyphicon glyphicon-asterisk"></i></span>
-									<input id="invoiceNumber" name="invoiceNumber" placeholder="Invoice number" type="text" class="form-control" ng-model="invoiceNumber" aria-describedby="basic-addon3" required>
+									<input id="invoiceNumber" name="invoiceNumber" placeholder="Invoice number" type="text" class="form-control" ng-model="invoiceNumber" aria-describedby="basic-addon3" ng-required="true">
 								</div>
 								<hr/>
 								<h5>Login to verify payment</h5>
@@ -407,7 +453,7 @@
 								<h3>Payment Details</h3>
 								<hr/>
 								<p>Payment Date : <b>{{displayPaymentDate | date:'mediumDate'}}</b></p>
-								<p>Payment Type : <b>{{displayPaymentType}}</b></p>
+								<!--p>Payment Type : <b>{{displayPaymentType}}</b></p-->
 								<p>Payment Amount : <b>{{displayPaymentAmount}}</b></p>
 								<p>Invoice Number : <b>{{displayInvoiceNumber}}</b></p>
 								<button id="submit"  class="btn btn-primary btn-lg btn-outline btn-rounded" ng-click="closePaymentForm()">OK</button>

@@ -120,7 +120,7 @@ $( function() {
 
 
 
-  myApp.controller('DashboardCtrl', ['$scope', '$http','$filter', 'NgTableParams', '$location', '$anchorScroll','$window', function($scope, $http, $filter, NgTableParams, $location, $anchorScroll,$window) {
+myApp.controller('DashboardCtrl', ['$scope', '$http','$filter', 'NgTableParams', '$location', '$anchorScroll','$window', function($scope, $http, $filter, NgTableParams, $location, $anchorScroll,$window) {
 
     $scope.dateNow = new Date(); //to get current date
     var globalUsername = $scope.$root.uname;
@@ -144,7 +144,8 @@ $( function() {
 
 
    
-
+    //array to store payments
+    $scope.paymentArray = []; //this should be available to verifyPayments function and getStudentByID function
     
 
 
@@ -161,12 +162,12 @@ $( function() {
       $http.get(url)
       .then(function(response){
         if(response.data == "ATTENDANCE FAILED"){
-          $scope.errorDialogDash("Attendance Failed", "Today is not a class date");
+          $scope.errorDialog("Attendance Failed", "Today is not a class date");
           $scope.markingAtt = false; //show the button
           $scope.loadingGifMark=false;
         }
         else if(response.data == "ATTENDANCE DUPLICATED"){
-          $scope.errorDialogDash("Attendance already entered", "Attendance for this student has already been entered");
+          $scope.errorDialog("Attendance already entered", "Attendance for this student has already been entered");
           $scope.markingAtt = false; //FUTURE IMPROVEMENT : If attendance already entered, maybe disable button or show another message
           $scope.loadingGifMark=false;
         }
@@ -202,7 +203,7 @@ $scope.printMe = function(){
 
         if(response.data == "NO ATTENDANCE RECORD"){
           $scope.viewingAtt = false;
-          $scope.errorDialogDash("Attendance not found", "Student has not attended any classes yet");
+          $scope.errorDialog("Attendance not found", "Student has not attended any classes yet");
           $scope.loadingGifView=false;
         }else{
           $scope.viewingAtt = true;
@@ -237,7 +238,7 @@ $scope.printMe = function(){
       });
        $scope.scrollTo();
 
-} //else end
+        } //else end
 
       });
 
@@ -299,6 +300,8 @@ $scope.getRegNo = function(){
 }
 
 
+
+
     //THIS FUNCTION IS TO GET THE STUDENT DETAILS WITH STUDENT ID
     //THIS FUNCTION ALSO GETS THE PAYMENT DETAILS
     $scope.getStudentByID = function(student_id){
@@ -309,7 +312,7 @@ $scope.getRegNo = function(){
       if(!student_id){  //check if student_id is blank , null or whitespaces
         //if it is empty, call this custom error message function
        // $("#dialog-confirm").dialog('open');
-        $scope.errorDialogDash("Empty Student Id", "Student Id field cannot be empty.");
+        $scope.errorDialog("Empty Student Id", "Student Id field cannot be empty.");
       }else{
         $scope.loadingGif = true;
         $scope.studentid = student_id;
@@ -325,7 +328,7 @@ $scope.getRegNo = function(){
           $scope.data = response.data;
 
           if($scope.data == "STUDENT DOES NOT EXIST"){
-            $scope.errorDialogDash("Student does not exist", "Wrong Student Id has been entered. Please check it and try again!");
+            $scope.errorDialog("Student does not exist", "Wrong Student Id has been entered. Please check it and try again!");
             $scope.loading = false;
             $scope.loadingGif = false;
           }else{
@@ -346,8 +349,7 @@ $scope.getRegNo = function(){
               $scope.qr_code = $scope.data.students[0].qr_code;
 
 
-              //array to store payments
-              $scope.paymentArray = [];
+              
 
               //--Check if payments are done here
               if($scope.data.payments.length == 0){ //if array is empty
@@ -359,58 +361,55 @@ $scope.getRegNo = function(){
                 $scope.payment4 = false;
                 $scope.payment5 = false;
                 $scope.payment6 = false;
-              }else{
-                //for registration we check if its filled AND if payment_type is set to registration
-              if(($scope.data.payments[0].payment_type).toLowerCase() == "registration"){
-                $scope.registration = true;
-                $scope.paymentArray[0] = $scope.data.payments[0]; //assign value to a variable for use after attendance table loaded
-              }else{
-                $scope.registration = false;
-              }
 
-              //First monthly payment
-              if($scope.data.payments[1]){
-                $scope.payment1 = true;
-                $scope.paymentArray[1] = $scope.data.payments[1]; //assign value to a variable for use after attendance table loaded
+                $scope.pmtDetailsRow = false;
+              }else{
 
-              }else{
-                $scope.payment1 = false;
-              }
-              //Second monthly payment
-              if($scope.data.payments[2]){
-                $scope.payment2 = true;
-                $scope.paymentArray[2] = $scope.data.payments[2]; //assign value to a variable for use after attendance table loaded
-              }else{
-                $scope.payment2 = false;
-              }
-              //Third monthly payment
-              if($scope.data.payments[3]){
-                $scope.payment3 = true;
-                $scope.paymentArray[3] = $scope.data.payments[3]; //assign value to a variable for use after attendance table loaded
-              }else{
-                $scope.payment3 = false;
-              }
-              //Fourth monthly payment
-              if($scope.data.payments[4]){
-                $scope.payment4 = true;
-                $scope.paymentArray[4] = $scope.data.payments[4]; //assign value to a variable for use after attendance table loaded
-              }else{
-                $scope.payment4 = false;
-              }
-              //Fifth monthly payment
-              if($scope.data.payments[5]){
-                $scope.payment5 = true;
-                $scope.paymentArray[5] = $scope.data.payments[5]; //assign value to a variable for use after attendance table loaded
-              }else{
-                $scope.payment5 = false;
-              }
-              //Sixth monthly payment
-              if($scope.data.payments[6]){
-                $scope.payment6 = true;
-                $scope.paymentArray[6] = $scope.data.payments[6]; //assign value to a variable for use after attendance table loaded
-              }else{
-                $scope.payment6 = false;
-              }
+                $scope.pmtDetailsRow = true;
+
+                for(n = 0; n < $scope.data.payments.length; n++){
+
+                  if(($scope.data.payments[n].payment_type).toLowerCase() == "registration"){
+                    $scope.registration = true;                             //set button to true
+                    $scope.paymentArray[0] = $scope.data.payments[n];       //assign to another array
+
+                  }
+
+                  else if(($scope.data.payments[n].payment_type).toLowerCase() == "monthly1"){
+                    $scope.payment1 = true;
+                    $scope.paymentArray[1] = $scope.data.payments[n];
+                  }
+
+
+                  else if(($scope.data.payments[n].payment_type).toLowerCase() == "monthly2"){
+                    $scope.payment2 = true;
+                    $scope.paymentArray[2] = $scope.data.payments[n];
+                  }
+
+
+                  else if(($scope.data.payments[n].payment_type).toLowerCase() == "monthly3"){
+                    $scope.payment3 = true;
+                    $scope.paymentArray[3] = $scope.data.payments[n];
+                  }
+
+
+                  else if(($scope.data.payments[n].payment_type).toLowerCase() == "monthly4"){
+                    $scope.payment4 = true;
+                    $scope.paymentArray[4] = $scope.data.payments[n];
+                  }
+
+                  else if(($scope.data.payments[n].payment_type).toLowerCase() == "monthly5"){
+                    $scope.payment5 = true;
+                    $scope.paymentArray[5] = $scope.data.payments[n];
+                  }
+
+                  else if(($scope.data.payments[n].payment_type).toLowerCase() == "monthly6"){
+                    $scope.payment6 = true;
+                    $scope.paymentArray[6] = $scope.data.payments[n];
+                  }
+                }
+
+
             }//end of if empty array 
           }
 
@@ -429,7 +428,7 @@ $scope.getRegNo = function(){
       $scope.amount = null;
       $scope.username = null;
       $scope.password = null;
-      
+      $scope.invoiceNumber = null;
       //if payment type is 0 its registration else it is monthly payment
       //This if statement is to display the payment type in the form and to set it to payment_type variable
       if(payment_type == 0){
@@ -473,7 +472,6 @@ $scope.getRegNo = function(){
 
     $scope.openPaymentForm = function(type){
 
-      //------------------------------------------
       var payment_index = type;
 
       $scope.displayPaymentDate = $scope.paymentArray[payment_index].date ;
@@ -481,16 +479,9 @@ $scope.getRegNo = function(){
       $scope.displayPaymentAmount = $scope.paymentArray[payment_index].amount;
       $scope.displayInvoiceNumber = $scope.paymentArray[payment_index].invoice_no;
 
-//$scope.pmt3
-
-
-
       document.getElementById('paymentFormDiv').style.display = "block";
-
-
-      //------------------------------------------
-
     }
+
 
     //THIS FUNCTION IS TO CLOSRE THE VERIFY FORM
     $scope.closeForm = function(){
@@ -535,7 +526,7 @@ $scope.getRegNo = function(){
       $scope.phoneAdd = null;
       $scope.qr_codeAdd = null;
     }else{
-      $scope.errorDialogDash("Registration Failed", "Please fill all the fields to register the student.");
+      $scope.errorDialog("Registration Failed", "Make sure data is valid before registering student.");
     }
 
   }
@@ -573,45 +564,59 @@ $scope.getRegNo = function(){
           
           $scope.closeForm();
 
+          
+          var dateAdded = new Date();
+          
+
+          var pmtAddedArray = {date: dateAdded, amount: $scope.amount, invoice_no: $scope.invoiceNumber,payment_type: $scope.payment_type};
+
           //after payment is made set the payment buttons
         if($scope.payment_type == "registration"){
           $scope.registration = true;
+          //$scope.paymentArray[0] = $scope.data.payments[n];
+          //these below two lines are to display data as soon as payment is made
+          $scope.paymentArray[0] = pmtAddedArray;
         }else
         if($scope.payment_type == "monthly1")
         {
           $scope.payment1 = true;
+          $scope.paymentArray[1] = pmtAddedArray;
         }else
         if($scope.payment_type == "monthly2")
         {
           $scope.payment2 = true;
+          $scope.paymentArray[2] = pmtAddedArray;
         }else
         if($scope.payment_type == "monthly3")
         {
           $scope.payment3 = true;
+          $scope.paymentArray[3] = pmtAddedArray;
         }else
         if($scope.payment_type == "monthly4")
         {
           $scope.payment4 = true;
+          $scope.paymentArray[4] = pmtAddedArray;
         }else
         if($scope.payment_type == "monthly5")
         {
           $scope.payment5 = true;
+          $scope.paymentArray[5] = pmtAddedArray;
         }else
         if($scope.payment_type == "monthly6")
         {
           $scope.payment6 = true;
+          $scope.paymentArray[6] = pmtAddedArray;
         }  
       }else{
         //display errorDialog and close the form
-        $scope.errorDialogDash("Login verification failed", "Enter the correct username and password to complete verification");
+        $scope.errorDialog("Login verification failed", "Enter the correct username and password to complete verification");
         $scope.closeForm();
       }
-
     }
 
     //THIS FUNCTION IS TO DISPLAY ERROR MESSAGE 
 
-    $scope.errorDialogDash = function(errorTitle, errorMessage){
+    $scope.errorDialog = function(errorTitle, errorMessage){
 
       $scope.errorTitle = errorTitle;//title doesnt seem to work, so set errorTitle in this function
       
@@ -622,9 +627,9 @@ $scope.getRegNo = function(){
     //document.getElementById('dialog-confirm').message = "none";
 
 
-      $("#dialog-errorDash").dialog('option', 'title', errorTitle)
+      $("#dialog-errorDashboard").dialog('option', 'title', errorTitle)
 
-      $("#dialog-errorDash").dialog('open');
+      $("#dialog-errorDashboard").dialog('open');
       
 
     }
@@ -643,9 +648,9 @@ $scope.getRegNo = function(){
      // $("dialog-confirm").setAttribute('title','HELLO WORLD');
     //document.getElementById('dialog-confirm').message = "none";
 
-      $("#dialog-success").dialog('option', 'title', successTitle)
+      $("#dialog-successDashboard").dialog('option', 'title', successTitle)
 
-      $("#dialog-success").dialog('open');
+      $("#dialog-successDashboard").dialog('open');
     }
 
 
@@ -674,7 +679,7 @@ $scope.getRegNo = function(){
 //-----
 
   $( function() {
-    $( "#dialog-errorDash" ).dialog({
+    $( "#dialog-errorDashboard" ).dialog({
       autoOpen:false,
       resizable: false,
       height: "auto",
@@ -689,7 +694,7 @@ $scope.getRegNo = function(){
   } );
 
   $( function() {
-    $( "#dialog-success" ).dialog({
+    $( "#dialog-successDashboard" ).dialog({
       autoOpen:false,
       resizable: false,
       height: "auto",
@@ -701,10 +706,10 @@ $scope.getRegNo = function(){
         }
       }
     });
-  } );
+  });
+}]);
 
 
 
 
 
-  }]);
