@@ -177,9 +177,10 @@
 									<label class="col-md-2" for="regNo">Registration Number</label>
 									<div class="col-md-10">
 										<input type="text" class="form-control" placeholder="Registration Number" aria-describedby="basic-addon2" ng-model="reg_noAdd" name="regNo" readonly>
+										<p ng-show="registerForm.regNo.$invalid && !registerForm.regNo.$pristine" class="help-block">Select the Age group and Batch to generate registration number</p>
 									</div>
 								</div>
-								<br/>
+								
 								
 								<div class="form-group" ng-class= "{'has-error' : registerForm.fullName.$invalid && !registerForm.fullName.$pristine}">
 									<label class="col-md-2" for="fullName">Full Name</label>
@@ -235,7 +236,7 @@
 									</div>
 								</div>
 
-								<br/>
+								
 
 								<button type="submit" class="btn btn-primary btn-md btn-outline btn-rounded" ng-disabled="registerForm.$invalid">Add Student</button>
 							</form>
