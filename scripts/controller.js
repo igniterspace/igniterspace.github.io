@@ -150,7 +150,7 @@ $( function() {
 
 
 
-myApp.controller('DashboardCtrl', ['$scope', '$http','$filter', 'NgTableParams', '$location', '$anchorScroll','$window', function($scope, $http, $filter, NgTableParams, $location, $anchorScroll,$window) {
+myApp.controller('DashboardCtrl', ['$scope', '$http','$filter', 'NgTableParams', '$location', '$anchorScroll','$window', '$parse', function($scope, $http, $filter, NgTableParams, $location, $anchorScroll,$window,$parse) {
 
     $scope.dateNow = new Date(); //to get current date
    // var globalUsername = $scope.$root.uname;
@@ -720,6 +720,95 @@ $scope.getRegNo = function(){
       
       document.getElementById('paymentFormDiv').style.display = "none";
     }
+
+
+    //THIS FUNCTION IS TO REMOVE THE PAYMENT
+    $scope.deletePayment = function(payment_type){
+
+      //alert($scope.studentid+ " " +globalBranch+ " "+paymentType);
+
+      var url = "https://script.google.com/macros/s/AKfycbzcvdl840bsB3nneQmL2AYApFlccl9N-KOQacIllXVlyOuHaUo/exec?studentid="+$scope.studentid+"&payment_type="+payment_type+"&delete_payment=true&branch="+globalBranch;
+        $http.get(url)
+        .then(function(response){
+          if(response.data == -1){
+            alert("Invalid ! Payment not deleted")
+          }
+        });
+      //this entire section is to make $scope dynamic for payment buttons
+      //var paymentTypeButton = payment_type;
+      //var model = $parse(payment_type);
+      //model.assign($scope, false);
+
+      //$scope. {paymentType} = false
+
+      //MAKE PAYMENT BUTTON BACK TO FALSE
+
+
+
+      //$scope.updatePaymentButtons();
+
+
+				if(payment_type == "registration"){
+                    $scope.registration = false;                             //set button to true
+                }else
+                if(payment_type == "monthly1"){
+                	$scope.payment1 = false;
+                }else
+                if(payment_type == "monthly2"){
+                	$scope.payment2 = false;
+                }else
+                if(payment_type == "monthly3"){
+                	$scope.payment3 = false;
+                }else
+                if(payment_type == "monthly4"){
+                	$scope.payment4 = false;
+                }else
+                if(payment_type == "monthly5"){
+                	$scope.payment5 = false;
+                }else
+                if(payment_type == "monthly6"){
+                	$scope.payment6 = false;
+                }
+
+/*if(payment_type == 0){
+        $scope.payment_type = "registration";
+      }else
+      if(payment_type == 1)
+      {
+        $scope.payment_type = "monthly1"
+      }else
+      if(payment_type == 2)
+      {
+        $scope.payment_type = "monthly2"
+      }else
+      if(payment_type == 3)
+      {
+        $scope.payment_type = "monthly3"
+      }else
+      if(payment_type == 4)
+      {
+        $scope.payment_type = "monthly4"
+      }else
+      if(payment_type == 5)
+      {
+        $scope.payment_type = "monthly5"
+      }else
+      if(payment_type == 6)
+      {
+        $scope.payment_type = "monthly6"
+      }
+      else{
+        $scope.payment_type = "additional"
+      }
+*/
+
+
+      document.getElementById('paymentFormDiv').style.display = "none";
+
+
+
+    }
+
 
 
 
