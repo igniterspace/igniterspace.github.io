@@ -133,12 +133,16 @@
 
 				    	<hr>
 				    	<h4>Enter Student ID</h4>
+
+				    	<form name="searchStudent" ng-submit="getStudentByID(student_id)">
+
 						<input  class="form-control" ng-model="student_id" type="text" placeholder="e.g. A1234"  id="studentSearch"   onkeypress="checkInputAlphaNumeric(event)" >
 						<br/>
 						<button ng-click="getStudentByID(student_id)" class="btn btn-primary btn-lg btn-outline btn-rounded">Search</button>
 							<span class="loadingGif" ng-show="loadingGif">
 								<img id="mySpinner" src="assets/images/gears.gif" /><b>Searching...</b>
 							</span>	
+							</form>
 				  	</div>
 				  	<!--div class="card col-md-12">
 						if any problem, put the above from "<h3>enter stud to br/> here
