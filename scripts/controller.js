@@ -356,7 +356,7 @@ $scope.getRegNo = function(){
         $scope.results = false;
         $scope.loading = true;
 
-        var url = "https://script.google.com/macros/s/AKfycbxlIbgY8FNxTUHOJ4isajDPFGRBGwXS9Aovvf8urw9-SUakqBSn/exec?studentid="+student_id+"&branch="+globalBranch;
+        var url = "https://script.google.com/macros/s/AKfycbxlIbgY8FNxTUHOJ4isajDPFGRBGwXS9Aovvf8urw9-SUakqBSn/exec?studentid="+student_id.toUpperCase()+"&branch="+globalBranch;
 
         $http.get(url)
         .then(function(response){
