@@ -134,9 +134,10 @@
 				    	<hr>
 				    	<h4>Enter Student ID</h4>
 
-				    	
-				    	
-						<input  class="form-control" ng-model="student_id" type="text" placeholder="e.g. A1234"  id="studentSearch"   onkeypress="checkInputAlphaNumeric(event)" >
+
+
+						<input  class="form-control" ng-model="student_id" type="text" placeholder="e.g. A1234"  id="studentSearch"   onkeypress="checkInputAlphaNumeric(event)"
+						ng-keyup="$event.keyCode == 13 && getStudentByID(student_id)" >
 						<br/>
 						<button ng-click="getStudentByID(student_id)" class="btn btn-primary btn-lg btn-outline btn-rounded">Search</button>
 							<span class="loadingGif" ng-show="loadingGif">
