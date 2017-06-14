@@ -386,18 +386,26 @@ $scope.getRegNo = function(){
               $scope.qr_code = $scope.data.students[0].qr_code;
 
 
-              
-
-              //--Check if payments are done here
-              if($scope.data.payments.length == 0){ //if array is empty
-                //set everything to false again 
-                $scope.registration = false;
+              //once student is loaded, clear all the payment buttons and load it again
+              //clear payment button whether array is empty or not
+              $scope.registration = false;
                 $scope.payment1 = false;
                 $scope.payment2 = false;
                 $scope.payment3 = false;
                 $scope.payment4 = false;
                 $scope.payment5 = false;
                 $scope.payment6 = false;
+
+              //--Check if payments are done here
+              if($scope.data.payments.length == 0){ //if array is empty
+                //set everything to false again 
+                /*$scope.registration = false;
+                $scope.payment1 = false;
+                $scope.payment2 = false;
+                $scope.payment3 = false;
+                $scope.payment4 = false;
+                $scope.payment5 = false;
+                $scope.payment6 = false;*/
 
                 $scope.pmtDetailsRow = false;
               }else{
